@@ -1,4 +1,4 @@
-package pro.sky.telegrambot.configuration.model;
+package pro.sky.telegrambot.model;
 
 import java.util.Objects;
 
