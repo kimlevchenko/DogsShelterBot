@@ -1,11 +1,11 @@
-package pro.sky.telegrambot.Service;
+package pro.sky.telegrambot.service;
 
 import org.springframework.stereotype.Service;
 import pro.sky.telegrambot.exception.InformationTypeByShelterNotFoundException;
-import pro.sky.telegrambot.Repository.ShelterRepository;
 import pro.sky.telegrambot.exception.ShelterNotFoundException;
 import pro.sky.telegrambot.model.Shelter;
 import pro.sky.telegrambot.model.ShelterId;
+import pro.sky.telegrambot.repository.ShelterRepository;
 
 
 import java.lang.reflect.Field;

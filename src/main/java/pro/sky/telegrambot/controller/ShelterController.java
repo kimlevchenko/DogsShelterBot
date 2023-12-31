@@ -7,11 +7,10 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.http.MediaType;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import pro.sky.telegrambot.Service.ShelterService;
 import pro.sky.telegrambot.model.Shelter;
 import pro.sky.telegrambot.model.ShelterId;
+import pro.sky.telegrambot.service.ShelterService;
 
 import java.util.List;
 

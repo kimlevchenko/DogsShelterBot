@@ -1,5 +1,7 @@
 package pro.sky.telegrambot.model;
 
+import java.util.Optional;
+
 /**
  * это тип данных, который позволяет создать список предопределенных значений
  * и использовать их в коде.
@@ -10,5 +12,5 @@ package pro.sky.telegrambot.model;
  * Это позволяет избежать ошибок и улучшить читаемость кода.
  */
 public enum ShelterId {
-    DOG, CAT
+    DOG, CAT;
 }

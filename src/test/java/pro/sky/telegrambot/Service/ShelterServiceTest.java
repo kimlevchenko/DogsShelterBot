@@ -29,7 +29,7 @@ public class ShelterServiceTest {
     private ShelterRepository shelterRepository;
 
     @InjectMocks
-    private ShelterService shelterService;
+    private pro.sky.telegrambot.Service.ShelterService shelterService;
 
     private Shelter shelter1;
 
