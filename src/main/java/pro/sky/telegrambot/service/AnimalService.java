@@ -1,39 +1,74 @@
 package pro.sky.telegrambot.service;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Service;
+import pro.sky.telegrambot.model.ShelterId;
 import pro.sky.telegrambot.model.animal.Animal;
-import pro.sky.telegrambot.repository.AnimalRepository;
+import pro.sky.telegrambot.model.animal.Cat;
+import pro.sky.telegrambot.model.animal.Dog;
+import pro.sky.telegrambot.repository.CatRepository;
+import pro.sky.telegrambot.repository.DogRepository;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
+@Service
 public class AnimalService {
-    private final AnimalRepository repository;
+    private final DogRepository dogRepository;
+    private final CatRepository catRepository;
+    private final pro.sky.telegrambot.service.ShelterService shelterService;
 
-    public AnimalService(AnimalRepository repository) {
-        this.repository = repository;
+    public AnimalService(DogRepository dogRepository, CatRepository catRepository, pro.sky.telegrambot.service.ShelterService shelterService) {
+        this.dogRepository = dogRepository;
+        this.catRepository = catRepository;
+        this.shelterService = shelterService;
     }
-    public Animal findAnimal(long id) {
-        return repository.findById(id).orElse(null); // вывели
+
+    private JpaRepository<? extends Animal, Integer> animalRepository(ShelterId shelterId) {
+        return (shelterId == ShelterId.DOG) ? dogRepository : catRepository;
     }
-    public Animal addAnimal(Animal animal) {
-        return repository.save(animal); // добавили
+
+    public Animal getAnimal(ShelterId shelterId, int id) {
+        shelterService.checkShelterId(shelterId);
+        return animalRepository(shelterId).findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Animal with id " + id + " in shelter " + shelterId + " not found"));
     }
-    public Animal editAnimal(Animal animal) {
-        return repository.findById(animal.getId())
-                .map(entity -> repository.save(animal))
-                .orElse(null); //заменили
-    }
-    public Animal deletedAnimal(Long id) {
-        var entity = repository.findById(id).orElse(null);
-        if (entity != null) {
-            repository.delete(entity);
+
+    public Animal createAnimal(ShelterId shelterId, Animal animal) {
+        shelterService.checkShelterId(shelterId);
+        if (shelterId == ShelterId.DOG) {
+            Dog dog = new Dog(animal);
+            dog.setId(0);
+            return dogRepository.save(dog);
+        } else {
+            Cat cat = new Cat(animal);
+            cat.setId(0);
+            return catRepository.save(cat);
         }
-        return entity; // удалили
     }
-    public Collection<Animal> filterByAge(int age) {
-        return repository.findAllByAge(age); //вывели список животных по возрасту
+
+    public Animal updateAnimal(ShelterId shelterId, Animal animal) {
+        shelterService.checkShelterId(shelterId);
+        getAnimal(shelterId, animal.getId());
+        if (shelterId == ShelterId.DOG) {
+            return dogRepository.save(new Dog(animal));
+        } else {
+            return catRepository.save(new Cat(animal));
+        }
     }
-    public Collection<String> filterAllAnimal() {
-        return Collections.singleton(repository.toString());//вывели список животных
+
+    public Animal deleteAnimal(ShelterId shelterId, int id) {
+        shelterService.checkShelterId(shelterId);
+        Animal animal = getAnimal(shelterId, id);
+        animalRepository(shelterId).deleteById(id);
+        return animal;
+    }
+
+    public Collection<Animal> getAllAnimals(ShelterId shelterId) {
+        shelterService.checkShelterId(shelterId);
+        return List.copyOf(animalRepository(shelterId).findAll());
     }
 }
