@@ -1,4 +1,4 @@
-package pro.sky.telegrambot.Service;
+package pro.sky.telegrambot.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,7 +29,7 @@ public class ShelterServiceTest {
     private ShelterRepository shelterRepository;
 
     @InjectMocks
-    private pro.sky.telegrambot.Service.ShelterService shelterService;
+    private pro.sky.telegrambot.service.ShelterService shelterService;
 
     private Shelter shelter1;
 

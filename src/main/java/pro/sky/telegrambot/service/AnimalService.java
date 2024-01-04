@@ -1,29 +1,24 @@
 package pro.sky.telegrambot.service;
 
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import pro.sky.telegrambot.model.ShelterId;
 import pro.sky.telegrambot.model.animal.Animal;
 import pro.sky.telegrambot.model.animal.Cat;
 import pro.sky.telegrambot.model.animal.Dog;
-import pro.sky.telegrambot.repository.CatRepository;
-import pro.sky.telegrambot.repository.DogRepository;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 @Service
 public class AnimalService {
-    private final DogRepository dogRepository;
-    private final CatRepository catRepository;
-    private final ShelterService shelterService;
-
-    public AnimalService(DogRepository dogRepository, CatRepository catRepository, ShelterService shelterService) {
+    private final pro.sky.telegrambot.repository.DogRepository dogRepository;
+    private final pro.sky.telegrambot.repository.CatRepository catRepository;
     private final pro.sky.telegrambot.service.ShelterService shelterService;
 
-    public AnimalService(DogRepository dogRepository, CatRepository catRepository, pro.sky.telegrambot.service.ShelterService shelterService) {
+    public AnimalService(pro.sky.telegrambot.repository.DogRepository dogRepository, pro.sky.telegrambot.repository.CatRepository catRepository, pro.sky.telegrambot.service.ShelterService shelterService) {
         this.dogRepository = dogRepository;
         this.catRepository = catRepository;
         this.shelterService = shelterService;
