@@ -7,26 +7,36 @@ import java.util.Objects;
 public class Animal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
     private String breed;
     private String animalName;
     private int age;
     private String gender;
 
-
-    public Animal(long id, String breed, String animalName, int age, String gender) {
-        this.id = id;
-        this.breed = breed;
-        this.animalName = animalName;
-        this.age = age;
-        this.gender = gender;
-
-    }
-
     public Animal() {
     }
 
-    public long getId() {
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setBreed(String breed) {
+        this.breed = breed;
+    }
+
+    public void setAnimalName(String animalName) {
+        this.animalName = animalName;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public int getId() {
         return id;
     }
 

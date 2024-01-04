@@ -18,6 +18,9 @@ import java.util.List;
 public class AnimalService {
     private final DogRepository dogRepository;
     private final CatRepository catRepository;
+    private final ShelterService shelterService;
+
+    public AnimalService(DogRepository dogRepository, CatRepository catRepository, ShelterService shelterService) {
     private final pro.sky.telegrambot.service.ShelterService shelterService;
 
     public AnimalService(DogRepository dogRepository, CatRepository catRepository, pro.sky.telegrambot.service.ShelterService shelterService) {
