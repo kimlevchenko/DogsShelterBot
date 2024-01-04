@@ -21,6 +21,9 @@ public class AnimalService {
     private final ShelterService shelterService;
 
     public AnimalService(DogRepository dogRepository, CatRepository catRepository, ShelterService shelterService) {
+    private final pro.sky.telegrambot.service.ShelterService shelterService;
+
+    public AnimalService(DogRepository dogRepository, CatRepository catRepository, pro.sky.telegrambot.service.ShelterService shelterService) {
         this.dogRepository = dogRepository;
         this.catRepository = catRepository;
         this.shelterService = shelterService;
