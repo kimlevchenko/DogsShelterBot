@@ -11,8 +11,11 @@ public class Dog extends Animal {
 
     public Dog(Animal animal) {
         setId(animal.getId());
-        setAnimalName(animal.getName());
+        setAnimalName(animal.getAnimalName());
         setBreed(animal.getBreed());
         setAge(animal.getAge());
+        setData(animal.getData());
+        setAdopted(animal.isAdopted());
+
     }
 }

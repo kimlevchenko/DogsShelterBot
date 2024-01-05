@@ -1,4 +1,4 @@
-package pro.sky.telegrambot.Service;
+package pro.sky.telegrambot.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,7 +8,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.internal.verification.Times;
 import org.mockito.junit.jupiter.MockitoExtension;
-import pro.sky.telegrambot.Repository.ShelterRepository;
+import pro.sky.telegrambot.repository.ShelterRepository;
 import pro.sky.telegrambot.exception.ShelterNotFoundException;
 import pro.sky.telegrambot.model.Shelter;
 import pro.sky.telegrambot.model.ShelterId;
@@ -29,7 +29,7 @@ public class ShelterServiceTest {
     private ShelterRepository shelterRepository;
 
     @InjectMocks
-    private pro.sky.telegrambot.Service.ShelterService shelterService;
+    private pro.sky.telegrambot.service.ShelterService shelterService;
 
     private Shelter shelter1;
 
