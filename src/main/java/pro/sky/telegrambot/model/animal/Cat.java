@@ -11,8 +11,10 @@ public class Cat extends Animal {
 
     public Cat(Animal animal) {
         setId(animal.getId());
-        setAnimalName(animal.getName());
+        setAnimalName(animal.getAnimalName());
         setBreed(animal.getBreed());
         setAge(animal.getAge());
+        setData(animal.getData());
+        setAdopted(animal.isAdopted());
     }
 }
