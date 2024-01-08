@@ -12,7 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pro.sky.telegrambot.model.PhotoReport;
+import pro.sky.telegrambot.model.photoReport.PhotoReport;
 import pro.sky.telegrambot.model.ShelterId;
 import pro.sky.telegrambot.service.PhotoReportService;
 

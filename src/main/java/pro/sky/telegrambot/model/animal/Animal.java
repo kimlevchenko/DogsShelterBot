@@ -19,7 +19,7 @@ public class Animal {
     @JoinColumn(name="shelter")  // для создания новой колонки
     private Shelter shelters;
     @Column(columnDefinition = "shelter")
-    private byte[] data; // фото для каждого живлтного
+    private byte[] data; // фото для каждого живoтного
     private boolean adopted; // статус животного
 
     public Animal() {

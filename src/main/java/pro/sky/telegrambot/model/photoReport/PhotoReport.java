@@ -1,4 +1,4 @@
-package pro.sky.telegrambot.model;
+package pro.sky.telegrambot.model.photoReport;
 
 import pro.sky.telegrambot.model.animal.Animal;
 
@@ -24,6 +24,19 @@ import java.util.Objects;
     @JoinColumn(name= "animal")
     private Animal animal;
     private String text; // текст отчета
+
+    public PhotoReport(byte[] data, Animal animal, String text) {
+        this.filePath = filePath;
+        this.fileSize = fileSize;
+        this.mediaType = mediaType;
+        this.date = date;
+        this.data = data;
+        this.animal = animal;
+        this.text = text;
+    }
+    public PhotoReport() {
+
+    }
 
     public Long getId() {
         return id;
@@ -104,8 +117,17 @@ import java.util.Objects;
         return result;
     }
 
-    public abstract AnimalAdoption getAdoption();
+    @Override
+    public String toString() {
+        return "PhotoReport{" +
+                "id=" + id +
+                ", filePath='" + filePath + '\'' +
+                ", fileSize=" + fileSize +
+                ", mediaType='" + mediaType + '\'' +
+                ", date=" + date +
+                ", data=" + Arrays.toString(data) +
+                ", animal=" + animal +
+                ", text='" + text + '\'' +
+                '}';
+    }
 }
-
-
-

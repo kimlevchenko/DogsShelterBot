@@ -4,12 +4,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import pro.sky.telegrambot.model.AnimalAdoption;
-import pro.sky.telegrambot.model.PhotoReport;
+import pro.sky.telegrambot.model.photoReport.DogPhotoReport;
+import pro.sky.telegrambot.model.photoReport.PhotoReport;
 import pro.sky.telegrambot.model.ShelterId;
 import pro.sky.telegrambot.model.animal.Animal;
 import pro.sky.telegrambot.repository.AnimalRepository;
-import pro.sky.telegrambot.repository.PhotoReportRepository;
+import pro.sky.telegrambot.repository.DogPhotoReportRepository;
 import pro.sky.telegrambot.repository.UserRepository;
 
 import java.io.FileOutputStream;
@@ -28,10 +28,10 @@ import java.util.logging.Logger;
     private final AnimalRepository animalRepository;
     private final ShelterService shelterService;
     private final UserRepository userRepository;
-    private final PhotoReportRepository photoReportRepository;
+    private final DogPhotoReportRepository photoReportRepository;
 
     public PhotoReportService(AnimalRepository animalRepository,ShelterService shelterService,
-                              UserRepository userRepository, PhotoReportRepository photoReportRepository,
+                              UserRepository userRepository, DogPhotoReportRepository photoReportRepository,
                              @Value("${photoReportDir}")String photoReportDir) {
         this.animalRepository=animalRepository;
         this.shelterService=shelterService;
@@ -40,7 +40,7 @@ import java.util.logging.Logger;
         this.photoReportDir=photoReportDir;
         }
 
-        public void upload(Long animalId, MultipartFile file, String text) throws IOException {
+        public void upload(Long animalId, MultipartFile file, String text, DogPhotoReport PhotoReport) throws IOException {
             var animal = animalRepository
                     .findById(animalId) // загрузить фото и описпние животного
                     .orElseThrow(); //.orElseThrow(AnimalNotFindException::new)!!!
@@ -52,17 +52,14 @@ import java.util.logging.Logger;
             var path = saveFile(file, (Animal) animal);// создали папку с файлом
 
             PhotoReport photoReport = (PhotoReport) photoReportRepository.findByAnimalId(animalId).orElse(new PhotoReport() {
-                @Override
-                public AnimalAdoption getAdoption() {
-                    return null;
-                }
+
             });
             photoReport.setFilePath(path);
             photoReport.setData(file.getBytes());
             photoReport.setFileSize(file.getSize());
             photoReport.setMediaType(file.getContentType());
             photoReport.setAnimal((Animal) animal);
-            photoReportRepository.save(photoReport);  // сохранение на диск(в базу данных)
+            photoReportRepository.save(PhotoReport);  // сохранение на диск(в базу данных)
             if (text != null) {
                 photoReport.setText(text);//
             }
@@ -81,8 +78,8 @@ import java.util.logging.Logger;
             return path;
         }
 
-        public PhotoReport find(long animalId) {
-            return (PhotoReport) photoReportRepository.findByAnimalId(animalId).orElse(null); //вывести отчет по животному, если такой есть
+        public PhotoReport find(long animalId, DogPhotoReportRepository dogPhotoReportRepository) {
+            return (PhotoReport) dogPhotoReportRepository.findByAnimalId(animalId).orElse(null); //вывести отчет по животному, если такой есть
         }
 
     public PhotoReport getPhotoReportById(ShelterId shelterId, Integer photoReportId) {
