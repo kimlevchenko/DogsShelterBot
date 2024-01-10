@@ -166,3 +166,4 @@ public class Shelter {
         return Objects.hash(id);
     }
 }
+
