@@ -10,21 +10,26 @@ import javax.persistence.Table;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "dog_photoReport")
-public class DogPhotoReport extends PhotoReport {
+@Table(name = "dog_report")
+public class DogReport extends Report {
     @ManyToOne
     private DogAdoption adoption;
     @Override
-    public CatAdoption getAdoption() {
+    public DogAdoption getAdoption() {
         return adoption;
     }
 
-    public DogPhotoReport(DogAdoption adoption, String filePath, Long fileSize, String mediaType,
-                          LocalDate date, byte[] data, Animal animal, String text) {
-        super(data, animal, text);
+    public DogReport(Long id, String filePath, Long fileSize, String mediaType,
+                     LocalDate date, byte[] data, Animal animal, String text, DogAdoption adoption) {
+        super(id, filePath, fileSize, mediaType, date, data, animal, text);
         this.adoption = adoption;
     }
-    public DogPhotoReport() {
+
+    public DogReport(DogAdoption adoption) {
+        this.adoption = adoption;
+    }
+
+    public DogReport() {
     }
     @Override
     public String toString() {

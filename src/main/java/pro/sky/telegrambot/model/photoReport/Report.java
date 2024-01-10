@@ -1,5 +1,6 @@
 package pro.sky.telegrambot.model.photoReport;
 
+import pro.sky.telegrambot.model.adoption.Adoption;
 import pro.sky.telegrambot.model.animal.Animal;
 
 import javax.persistence.*;
@@ -7,9 +8,11 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Objects;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 @Entity
-@Table(name = "photoReport")
-    public abstract class PhotoReport {
+@Table(name = "report")
+    public abstract class Report {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,11 +24,13 @@ import java.util.Objects;
     @Lob
     private byte[] data; // картинка, байт(массив)
     @OneToOne
-    @JoinColumn(name= "animal")
+    @JoinColumn(name = "animal")
     private Animal animal;
     private String text; // текст отчета
 
-    public PhotoReport(byte[] data, Animal animal, String text) {
+    public Report(Long id, String filePath, Long fileSize, String mediaType,
+                  LocalDate date, byte[] data, Animal animal, String text) {
+        this.id = id;
         this.filePath = filePath;
         this.fileSize = fileSize;
         this.mediaType = mediaType;
@@ -34,13 +39,15 @@ import java.util.Objects;
         this.animal = animal;
         this.text = text;
     }
-    public PhotoReport() {
+
+    public Report() {
 
     }
 
     public Long getId() {
         return id;
     }
+    public abstract Adoption getAdoption();
 
     public void setId(Long id) {
         this.id = id;
@@ -106,8 +113,8 @@ import java.util.Objects;
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PhotoReport that = (PhotoReport) o;
-        return Objects.equals(id, that.id) && Objects.equals(filePath, that.filePath) && Objects.equals(fileSize, that.fileSize) && Objects.equals(mediaType, that.mediaType) && Objects.equals(date, that.date) && Arrays.equals(data, that.data) && Objects.equals(animal, that.animal) && Objects.equals(text, that.text);
+        Report report = (Report) o;
+        return Objects.equals(id, report.id) && Objects.equals(filePath, report.filePath) && Objects.equals(fileSize, report.fileSize) && Objects.equals(mediaType, report.mediaType) && Objects.equals(date, report.date) && Arrays.equals(data, report.data) && Objects.equals(animal, report.animal) && Objects.equals(text, report.text);
     }
 
     @Override
@@ -119,7 +126,7 @@ import java.util.Objects;
 
     @Override
     public String toString() {
-        return "PhotoReport{" +
+        return "Report{" +
                 "id=" + id +
                 ", filePath='" + filePath + '\'' +
                 ", fileSize=" + fileSize +
@@ -131,3 +138,4 @@ import java.util.Objects;
                 '}';
     }
 }
+

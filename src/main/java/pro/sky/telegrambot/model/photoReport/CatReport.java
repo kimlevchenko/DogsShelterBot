@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "cat_photoReport")
-public class CatPhotoReport extends PhotoReport {
+public class CatReport extends Report {
     @ManyToOne
     private CatAdoption adoption;
     @Override
@@ -18,12 +18,18 @@ public class CatPhotoReport extends PhotoReport {
         return adoption;
     }
 
-    public CatPhotoReport(CatAdoption adoption, String filePath, Long fileSize, String mediaType,
-                          LocalDate date, byte[] data, Animal animal, String text) {
-            super(data, animal, text);
-            this.adoption = adoption;
+    public CatReport(Long id, String filePath, Long fileSize, String mediaType,
+                     LocalDate date, byte[] data, Animal animal, String text,
+                     CatAdoption adoption) {
+        super(id, filePath, fileSize, mediaType, date, data, animal, text);
+        this.adoption = adoption;
     }
-    public CatPhotoReport() {
+
+    public CatReport(CatAdoption adoption) {
+        this.adoption = adoption;
+    }
+
+    public CatReport() {
     }
     @Override
     public String toString() {

@@ -12,9 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pro.sky.telegrambot.model.photoReport.PhotoReport;
+import pro.sky.telegrambot.model.photoReport.Report;
 import pro.sky.telegrambot.model.ShelterId;
-import pro.sky.telegrambot.service.PhotoReportService;
+import pro.sky.telegrambot.service.ReportService;
 
 import java.time.LocalDate;
 import java.util.Collection;
@@ -23,9 +23,9 @@ import java.util.Collection;
 @RestController
 @RequestMapping("/photoReport")
     public class PhotoReportController {
-    private PhotoReportService service;
+    private ReportService service;
 
-    public PhotoReportController(PhotoReportService service) {
+    public PhotoReportController(ReportService service) {
         this.service = service;
     }
     @Operation(summary = "Поиск отчета о животном по id",
@@ -35,17 +35,17 @@ import java.util.Collection;
                             description = "Найденный отчет о животном",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = PhotoReport.class)
+                                    schema = @Schema(implementation = Report.class)
                             )
                     )
             })
     @GetMapping("{shelter_id}/{photoReport_id}")
-    public ResponseEntity<PhotoReport> getPhotoReport(
+    public ResponseEntity<Report> getPhotoReport(
             @Parameter(description = "id приюта")
             @PathVariable("shelter_id") ShelterId shelterId,
             @Parameter(description = "id отчета о животном")
             @PathVariable("photoReport_id") Integer photoReportId) {
-        PhotoReport animalPhotoReport = service.getPhotoReportById(shelterId, photoReportId);
+        Report animalPhotoReport = service.getPhotoReportById(shelterId, photoReportId);
         return ResponseEntity.ok(animalPhotoReport);
     }
     @Operation(summary = "Получение фотографии животного из отчета",
@@ -64,7 +64,7 @@ import java.util.Collection;
             @PathVariable("shelter_id") ShelterId shelterId,
             @Parameter(description = "id отчета о животном")
             @PathVariable("photoReport_id") Integer photoReportId) {
-        PhotoReport photoReport = service.getPhotoReportById(shelterId, photoReportId);
+        Report photoReport = service.getPhotoReportById(shelterId, photoReportId);
         byte[] data = photoReport.getData();
 
         HttpHeaders headers = new HttpHeaders();
@@ -83,17 +83,17 @@ import java.util.Collection;
                             description = "Удаленный отчет о животном",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = PhotoReport.class)
+                                    schema = @Schema(implementation = Report.class)
                             )
                     )
             })
     @DeleteMapping("{shelter_id}/{photoReport_id}")
-    public ResponseEntity<PhotoReport> deletePhotoReport(
+    public ResponseEntity<Report> deletePhotoReport(
             @Parameter(description = "id приюта")
             @PathVariable("shelter_id") ShelterId shelterId,
             @Parameter(description = "id отчета о животном")
             @PathVariable("photoReport_id") Integer photoReportId) {
-        PhotoReport photoReport = service.getPhotoReportById(shelterId, photoReportId);
+        Report photoReport = service.getPhotoReportById(shelterId, photoReportId);
         return ResponseEntity.ok(photoReport);
     }
 
@@ -104,12 +104,12 @@ import java.util.Collection;
                             description = "Все отчеты о животных",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    array = @ArraySchema(schema = @Schema(implementation = PhotoReport.class))
+                                    array = @ArraySchema(schema = @Schema(implementation = Report.class))
                             )
                     )
             })
     @GetMapping("{shelter_id}/all") // все отчеты приюта
-    public ResponseEntity<Collection<PhotoReport>> getAllReports(
+    public ResponseEntity<Collection<Report>> getAllReports(
             @Parameter(description = "id приюта")
             @PathVariable("shelter_id") ShelterId shelterId
     ) {
@@ -123,12 +123,12 @@ import java.util.Collection;
                             description = "Все отчеты о животных на конкретную дату",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    array = @ArraySchema(schema = @Schema(implementation = PhotoReport.class))
+                                    array = @ArraySchema(schema = @Schema(implementation = Report.class))
                             )
                     )
             })
     @GetMapping(value = "{shelter_id}", params = "date") // отчет за указанную дату
-    public  ResponseEntity<Collection<PhotoReport>> getPhotoReportByDate(
+    public  ResponseEntity<Collection<Report>> getPhotoReportByDate(
             @Parameter(description = "id приюта")
             @PathVariable("shelter_id") ShelterId shelterId,
             @Parameter(description = "Дата поиска отчетов о животных")
