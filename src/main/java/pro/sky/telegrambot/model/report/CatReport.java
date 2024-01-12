@@ -1,4 +1,4 @@
-package pro.sky.telegrambot.model.photoReport;
+package pro.sky.telegrambot.model.report;
 
 import pro.sky.telegrambot.model.adoption.CatAdoption;
 import pro.sky.telegrambot.model.animal.Animal;

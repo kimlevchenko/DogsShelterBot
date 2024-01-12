@@ -13,8 +13,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import pro.sky.telegrambot.model.photoReport.DogReport;
-import pro.sky.telegrambot.model.photoReport.Report;
+import pro.sky.telegrambot.model.report.DogReport;
+import pro.sky.telegrambot.model.report.Report;
 import pro.sky.telegrambot.model.ShelterId;
 import pro.sky.telegrambot.service.ReportService;
 

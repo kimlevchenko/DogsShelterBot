@@ -1,4 +1,4 @@
-package pro.sky.telegrambot.model.photoReport;
+package pro.sky.telegrambot.model.report;
 
 import pro.sky.telegrambot.model.adoption.Adoption;
 import pro.sky.telegrambot.model.animal.Animal;
@@ -7,8 +7,6 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Objects;
-
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Entity
 @Table(name = "report")
