@@ -12,22 +12,26 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import pro.sky.telegrambot.model.photoReport.DogReport;
 import pro.sky.telegrambot.model.photoReport.Report;
 import pro.sky.telegrambot.model.ShelterId;
 import pro.sky.telegrambot.service.ReportService;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Collection;
 
 
 @RestController
-@RequestMapping("/photoReport")
-    public class PhotoReportController {
+@RequestMapping("/report")
+    public class ReportController {
     private ReportService service;
 
-    public PhotoReportController(ReportService service) {
+    public ReportController(ReportService service) {
         this.service = service;
     }
+
     @Operation(summary = "Поиск отчета о животном по id",
             responses = {
                     @ApiResponse(
@@ -39,15 +43,16 @@ import java.util.Collection;
                             )
                     )
             })
-    @GetMapping("{shelter_id}/{photoReport_id}")
-    public ResponseEntity<Report> getPhotoReport(
+    @GetMapping("{shelter_id}/{report_id}")
+    public ResponseEntity<Report> getReport(
             @Parameter(description = "id приюта")
             @PathVariable("shelter_id") ShelterId shelterId,
             @Parameter(description = "id отчета о животном")
-            @PathVariable("photoReport_id") Integer photoReportId) {
-        Report animalPhotoReport = service.getPhotoReportById(shelterId, photoReportId);
-        return ResponseEntity.ok(animalPhotoReport);
+            @PathVariable("report_id") Integer reportId) {
+        Report animalReport = service.getReportById(shelterId, reportId);
+        return ResponseEntity.ok(animalReport);
     }
+
     @Operation(summary = "Получение фотографии животного из отчета",
             responses = {
                     @ApiResponse(
@@ -58,14 +63,14 @@ import java.util.Collection;
                             )
                     )
             })
-    @GetMapping("{shelter_id}/{photoReport_id}/data")
-    public ResponseEntity<byte[]> getPhotoReportData(
+    @GetMapping("{shelter_id}/{report_id}/data")
+    public ResponseEntity<byte[]> getReportData(
             @Parameter(description = "id приюта")
             @PathVariable("shelter_id") ShelterId shelterId,
             @Parameter(description = "id отчета о животном")
-            @PathVariable("photoReport_id") Integer photoReportId) {
-        Report photoReport = service.getPhotoReportById(shelterId, photoReportId);
-        byte[] data = photoReport.getData();
+            @PathVariable("report_id") Integer reportId) {
+        Report report = service.getReportById(shelterId, reportId);
+        byte[] data = report.getData();
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_JPEG);
@@ -73,7 +78,6 @@ import java.util.Collection;
 
         return new ResponseEntity<>(data, headers, HttpStatus.OK);
     }
-
 
 
     @Operation(summary = "Удаление отчета о животном по id",
@@ -87,14 +91,14 @@ import java.util.Collection;
                             )
                     )
             })
-    @DeleteMapping("{shelter_id}/{photoReport_id}")
-    public ResponseEntity<Report> deletePhotoReport(
+    @DeleteMapping("{shelter_id}/{report_id}")
+    public ResponseEntity<Report> deleteReport(
             @Parameter(description = "id приюта")
             @PathVariable("shelter_id") ShelterId shelterId,
             @Parameter(description = "id отчета о животном")
-            @PathVariable("photoReport_id") Integer photoReportId) {
-        Report photoReport = service.getPhotoReportById(shelterId, photoReportId);
-        return ResponseEntity.ok(photoReport);
+            @PathVariable("report_id") Integer reportId) {
+        Report report = service.getReportById(shelterId, reportId);
+        return ResponseEntity.ok(report);
     }
 
     @Operation(summary = "Поиск всех отчетов о животных",
@@ -113,7 +117,7 @@ import java.util.Collection;
             @Parameter(description = "id приюта")
             @PathVariable("shelter_id") ShelterId shelterId
     ) {
-        return ResponseEntity.ok(service.getAllPhotoReport(shelterId));
+        return ResponseEntity.ok(service.getAllReport(shelterId));
     }
 
     @Operation(summary = "Поиск всех отчетов о животных на конкретную дату",
@@ -128,14 +132,15 @@ import java.util.Collection;
                     )
             })
     @GetMapping(value = "{shelter_id}", params = "date") // отчет за указанную дату
-    public  ResponseEntity<Collection<Report>> getPhotoReportByDate(
+    public ResponseEntity<Collection<Report>> getReportByDate(
             @Parameter(description = "id приюта")
             @PathVariable("shelter_id") ShelterId shelterId,
             @Parameter(description = "Дата поиска отчетов о животных")
-            @RequestParam("date") LocalDate date){
+            @RequestParam("date") LocalDate date) {
         //@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd")LocalDate date){
-        return ResponseEntity.ok(service.getAllPhotoReportByDate(shelterId, date));
+        return ResponseEntity.ok(service.getAllReportByDate(shelterId, date));
     }
+
     @Operation(
             summary = "Отправляет предупреждение усыновителю при неполном отчете",
             responses = {
@@ -155,9 +160,36 @@ import java.util.Collection;
     )
     @PostMapping("/warning_to_user/{user_id}")
     public void warningToUser(@Parameter(description = "id пользователя")
-                              @PathVariable("user_id") long id)
-    {
+                              @PathVariable("user_id") long id) {
         service.warningToUser(id);
     }
 
+    @Operation(
+            summary = "Upload file",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "успешно"),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Bad Request.")
+            }
+    )
+
+    @PostMapping("/{upload}")
+    public void upload(@Parameter(description="id животного")
+                           @RequestParam("animal_id") Long animalId,
+                       @RequestParam("file")MultipartFile file,
+                       @RequestParam("text") String text,
+                       @RequestParam("dogReport") DogReport dogReport)
+    {
+        try {
+            service.upload(animalId,file,text,dogReport);
+        } catch (IOException e) { //если при чтении или записи файла произошла ошибка ввода-вывода брасает исключение RuntimeException
+            throw new RuntimeException(e);
+        }
+    }
 }
+
+
+

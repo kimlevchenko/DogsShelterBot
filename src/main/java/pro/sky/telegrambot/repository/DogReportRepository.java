@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface DogPhotoReportRepository extends JpaRepository<DogReport, Long> {
+public interface DogReportRepository extends JpaRepository<DogReport, Long> {
         Optional<Report> findByAnimalId(long id);// ищет по id животного
 
     //для волонтера
@@ -21,6 +21,6 @@ public interface DogPhotoReportRepository extends JpaRepository<DogReport, Long>
             "and data is not null " +
             "and text is not null " +
             "order by date desc limit 1", nativeQuery = true)
-    Report findLatestPhotoReport(Integer adoption_id);
+    Report findLatestReport(Integer adoption_id);
 
 }
