@@ -10,9 +10,9 @@ import pro.sky.telegrambot.model.photoReport.DogReport;
 import pro.sky.telegrambot.model.photoReport.Report;
 import pro.sky.telegrambot.model.ShelterId;
 import pro.sky.telegrambot.model.animal.Animal;
-import pro.sky.telegrambot.repository.AnimalRepository;
-import pro.sky.telegrambot.repository.DogReportRepository;
-import pro.sky.telegrambot.repository.UserRepository;
+import pro.sky.telegrambot.repositories.AnimalRepository;
+import pro.sky.telegrambot.repositories.DogReportRepository;
+import pro.sky.telegrambot.repositories.UserRepository;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

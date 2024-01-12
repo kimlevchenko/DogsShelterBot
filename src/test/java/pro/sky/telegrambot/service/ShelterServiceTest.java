@@ -8,7 +8,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.internal.verification.Times;
 import org.mockito.junit.jupiter.MockitoExtension;
-import pro.sky.telegrambot.repository.ShelterRepository;
+import pro.sky.telegrambot.repositories.ShelterRepository;
 import pro.sky.telegrambot.exception.ShelterNotFoundException;
 import pro.sky.telegrambot.model.Shelter;
 import pro.sky.telegrambot.model.ShelterId;
