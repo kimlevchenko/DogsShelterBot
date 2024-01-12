@@ -1,4 +1,4 @@
-package pro.sky.telegrambot.repository;
+package pro.sky.telegrambot.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,14 +13,4 @@ import java.util.Optional;
 @Repository
 public interface DogReportRepository extends JpaRepository<DogReport, Long> {
         Optional<Report> findByAnimalId(long id);// ищет по id животного
-
-    //для волонтера
-    List<DogReport> findByDate(LocalDate date);
-
-    @Query(value = "SELECT * FROM dog_report where adoption_id = ?1 " +
-            "and data is not null " +
-            "and text is not null " +
-            "order by date desc limit 1", nativeQuery = true)
-    Report findLatestReport(Integer adoption_id);
-
 }

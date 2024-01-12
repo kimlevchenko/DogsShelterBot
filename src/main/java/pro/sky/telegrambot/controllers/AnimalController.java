@@ -1,4 +1,4 @@
-package pro.sky.telegrambot.controller;
+package pro.sky.telegrambot.controllers;
 
 
 import io.swagger.v3.oas.annotations.Operation;

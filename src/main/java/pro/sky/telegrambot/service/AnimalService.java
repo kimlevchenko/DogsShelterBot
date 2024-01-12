@@ -1,8 +1,7 @@
 package pro.sky.telegrambot.service;
 
-import pro.sky.telegrambot.service.ShelterService;
-import pro.sky.telegrambot.repository.CatRepository;
-import pro.sky.telegrambot.repository.DogRepository;
+import pro.sky.telegrambot.repositories.CatRepository;
+import pro.sky.telegrambot.repositories.DogRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import pro.sky.telegrambot.model.ShelterId;
