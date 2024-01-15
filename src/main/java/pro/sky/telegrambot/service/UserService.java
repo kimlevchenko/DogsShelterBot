@@ -8,8 +8,6 @@ import pro.sky.telegrambot.repository.UserRepository;
 
 import java.util.List;
 
-;
-
 @Service
 public class UserService {
     private final UserRepository UserRepository;
