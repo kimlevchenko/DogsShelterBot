@@ -33,5 +33,3 @@ build/
 .vscode/
 
 /avatars/*.*
-/mvnw
-/mvnw.cmd
