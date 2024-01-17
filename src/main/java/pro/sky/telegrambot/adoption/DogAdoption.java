@@ -1,0 +1,42 @@
+package pro.sky.telegrambot.adoption;
+
+import pro.sky.telegrambot.model.entity.Dog;
+import pro.sky.telegrambot.model.entity.User;
+
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import java.time.LocalDate;
+
+@Entity
+@Table(name = "dog_adoption")
+public class DogAdoption extends Adoption {
+    //Питомец. не animal_id, а целый Animal, чтобы возвратить в коллекции усыновлений и описание питомца тоже
+    @ManyToOne
+    private Dog animal;
+
+    @Override
+    public Dog getAnimal() {
+        return animal;
+    }
+
+    public DogAdoption(User user, Dog animal, LocalDate date, LocalDate trialDate) {
+        super(user, date, trialDate);
+        this.animal = animal;
+    }
+
+    public DogAdoption() {
+    }
+
+    @Override
+    public String toString() {
+        return "DogAdoption{" +
+                "id=" + getId() +
+                ", user=" + getUser() +
+                ", animal=" + animal +
+                ", date=" + getDate() +
+                ", trialDate=" + getTrialDate() +
+                "}";
+    }
+}
+

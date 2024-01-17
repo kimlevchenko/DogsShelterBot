@@ -1,20 +1,21 @@
-package pro.sky.telegrambot.model;
+package pro.sky.telegrambot.model.entity;
 
 import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Objects;
 
-public abstract class Animal {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Entity
+public class Animal {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String breed;
     private String animalName;
     private int age;
     private String gender;
-   // @ManyToOne
-    //@JoinColumn(name="shelter")
-    //private Shelter shelters;
+    @ManyToOne
+    @JoinColumn(name = "shelter")
+    private Shelter shelters;
     private byte[] data; // фото для каждого живoтного
     private boolean adopted; // статус животного
 
