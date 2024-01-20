@@ -1,8 +1,7 @@
-package pro.sky.telegrambot.adoption;
+package pro.sky.telegrambot.model.adoption;
 
 
-import pro.sky.telegrambot.model.entity.Cat;
-import pro.sky.telegrambot.model.entity.Dog;
+import pro.sky.telegrambot.model.animal.Cat;
 import pro.sky.telegrambot.model.entity.User;
 
 import javax.persistence.Entity;

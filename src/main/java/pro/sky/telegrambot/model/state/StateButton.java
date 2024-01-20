@@ -1,4 +1,6 @@
-package pro.sky.telegrambot.model.entity;
+package pro.sky.telegrambot.model.state;
+
+import pro.sky.telegrambot.model.entity.ShelterId;
 
 import javax.persistence.*;
 

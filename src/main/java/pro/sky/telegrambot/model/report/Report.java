@@ -1,7 +1,7 @@
-package pro.sky.telegrambot.report;
+package pro.sky.telegrambot.model.report;
 
-import pro.sky.telegrambot.adoption.Adoption;
-import pro.sky.telegrambot.model.entity.Animal;
+import pro.sky.telegrambot.model.adoption.Adoption;
+import pro.sky.telegrambot.model.animal.Animal;
 
 import javax.persistence.*;
 import java.time.LocalDate;

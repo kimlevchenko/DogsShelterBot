@@ -1,26 +1,26 @@
-package pro.sky.telegrambot.model.entity;
+package pro.sky.telegrambot.model.animal;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "cat")
-public class Cat extends Animal {
-
+@Table(name = "dog")
+public class Dog extends Animal {
     @Id
     private int id;
 
-    public Cat() {
+    public Dog() {
     }
 
-    public Cat(Animal animal) {
+    public Dog(Animal animal) {
         setId(animal.getId());
         setAnimalName(animal.getAnimalName());
         setBreed(animal.getBreed());
         setAge(animal.getAge());
         setData(animal.getData());
         setAdopted(animal.isAdopted());
+
     }
 
     public void setId(int id) {

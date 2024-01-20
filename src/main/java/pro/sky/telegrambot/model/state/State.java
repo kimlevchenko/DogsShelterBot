@@ -1,4 +1,4 @@
-package pro.sky.telegrambot.model.entity;
+package pro.sky.telegrambot.model.state;
 
 import javax.persistence.*;
 import java.util.List;

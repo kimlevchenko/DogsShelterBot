@@ -14,7 +14,7 @@ public class User {
     private String name;
     @Enumerated(EnumType.STRING)
     private ShelterId shelterId;
-    //    @ManyToOne  //по умолчанию (fetch = FetchType.EAGER)
+//    @ManyToOne  //по умолчанию (fetch = FetchType.EAGER)
 //    private State state;
 //    @ManyToOne
 //    private State previousState;

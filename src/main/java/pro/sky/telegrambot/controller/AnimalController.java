@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pro.sky.telegrambot.service.AnimalService;
 import pro.sky.telegrambot.model.entity.ShelterId;
-import pro.sky.telegrambot.model.entity.Animal;
+import pro.sky.telegrambot.model.animal.Animal;
 
 import java.util.Collection;
 

@@ -1,4 +1,6 @@
-package pro.sky.telegrambot.model.entity;
+package pro.sky.telegrambot.model.animal;
+
+import pro.sky.telegrambot.model.entity.Shelter;
 
 import javax.persistence.*;
 import java.util.Arrays;

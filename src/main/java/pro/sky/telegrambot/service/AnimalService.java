@@ -5,9 +5,9 @@ import pro.sky.telegrambot.repository.DogRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import pro.sky.telegrambot.model.entity.ShelterId;
-import pro.sky.telegrambot.model.entity.Animal;
-import pro.sky.telegrambot.model.entity.Cat;
-import pro.sky.telegrambot.model.entity.Dog;
+import pro.sky.telegrambot.model.animal.Animal;
+import pro.sky.telegrambot.model.animal.Cat;
+import pro.sky.telegrambot.model.animal.Dog;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.Collection;

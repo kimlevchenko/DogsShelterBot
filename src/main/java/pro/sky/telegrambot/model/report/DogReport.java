@@ -1,7 +1,7 @@
-package pro.sky.telegrambot.report;
+package pro.sky.telegrambot.model.report;
 
-import pro.sky.telegrambot.adoption.CatAdoption;
-import pro.sky.telegrambot.model.entity.Animal;
+import pro.sky.telegrambot.model.adoption.DogAdoption;
+import pro.sky.telegrambot.model.animal.Animal;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -9,28 +9,27 @@ import javax.persistence.Table;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "cat_photoReport")
-public class CatReport extends Report {
+@Table(name = "dog_report")
+public class DogReport extends Report {
     @ManyToOne
-    private CatAdoption adoption;
+    private DogAdoption adoption;
 
     @Override
-    public CatAdoption getAdoption() {
+    public DogAdoption getAdoption() {
         return adoption;
     }
 
-    public CatReport(Long id, String filePath, Long fileSize, String mediaType,
-                     LocalDate date, byte[] data, Animal animal, String text,
-                     CatAdoption adoption) {
+    public DogReport(Long id, String filePath, Long fileSize, String mediaType,
+                     LocalDate date, byte[] data, Animal animal, String text, DogAdoption adoption) {
         super(id, filePath, fileSize, mediaType, date, data, animal, text);
         this.adoption = adoption;
     }
 
-    public CatReport(CatAdoption adoption) {
+    public DogReport(DogAdoption adoption) {
         this.adoption = adoption;
     }
 
-    public CatReport() {
+    public DogReport() {
     }
 
     @Override
@@ -42,4 +41,3 @@ public class CatReport extends Report {
                 "}";
     }
 }
-
