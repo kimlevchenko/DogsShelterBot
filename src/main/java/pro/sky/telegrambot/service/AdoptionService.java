@@ -8,9 +8,9 @@ import javax.persistence.EntityNotFoundException;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
+import pro.sky.telegrambot.exception.ShelterNotFoundException;
 /*import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import pro.sky.courseworktelegrambot.entities.*;
-import pro.sky.courseworktelegrambot.exceptions.ShelterNotFoundException;
 import pro.sky.courseworktelegrambot.exceptions.TelegramException;
 import pro.sky.courseworktelegrambot.exceptions.UserOrPetIsBusyException;
 import pro.sky.courseworktelegrambot.repositories.*;*/
@@ -256,3 +256,5 @@ public class AdoptionService {
         }
     }
 }
+
+
