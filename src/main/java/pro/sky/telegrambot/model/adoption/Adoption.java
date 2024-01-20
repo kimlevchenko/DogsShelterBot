@@ -10,7 +10,7 @@ import java.util.Objects;
 @MappedSuperclass //указывает, что этот класс НЕ является сущностью JPA,
 // но его поля будут унаследованы подклассами, которые будут сущностями JPA.
 
-public class Adoption {
+public abstract class Adoption {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -32,9 +32,7 @@ public class Adoption {
         this.trialDate = trialDate;
     }
 
-    public Animal getAnimal() {
-        return null;
-    }
+    public abstract Animal getAnimal();
 
     public int getId() {
         return id;

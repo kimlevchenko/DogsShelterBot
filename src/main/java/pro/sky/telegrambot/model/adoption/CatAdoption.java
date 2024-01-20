@@ -17,6 +17,10 @@ public class CatAdoption extends Adoption {
     @ManyToOne
     private Cat animal;
 
+    public CatAdoption() {
+
+    }
+
     @Override
     public Cat getAnimal() {
         return animal;
@@ -27,7 +31,7 @@ public class CatAdoption extends Adoption {
         this.animal = animal;
     }
 
-    public CatAdoption() {
+    public CatAdoption(User user, Cat animal, LocalDate trialDate) {
     }
 
     @Override
