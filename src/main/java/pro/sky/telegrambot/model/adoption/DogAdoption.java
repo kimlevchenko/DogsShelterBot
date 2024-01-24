@@ -1,5 +1,6 @@
 package pro.sky.telegrambot.model.adoption;
 
+import pro.sky.telegrambot.model.animal.Cat;
 import pro.sky.telegrambot.model.animal.Dog;
 import pro.sky.telegrambot.model.entity.User;
 
@@ -24,12 +25,9 @@ public class DogAdoption extends Adoption {
         return animal;
     }
 
-    public DogAdoption(User user, Dog animal, LocalDate date, LocalDate trialDate) {
-        super(user, date, trialDate);
-        this.animal = animal;
-    }
-
     public DogAdoption(User user, Dog animal, LocalDate trialDate) {
+        super(user, trialDate);
+        this.animal = animal;
     }
 
     @Override

@@ -26,12 +26,9 @@ public class CatAdoption extends Adoption {
         return animal;
     }
 
-    public CatAdoption(User user, Cat animal, LocalDate date, LocalDate trialDate) {
-        super(user, date, trialDate);
-        this.animal = animal;
-    }
-
     public CatAdoption(User user, Cat animal, LocalDate trialDate) {
+        super(user, trialDate);
+        this.animal = animal;
     }
 
     @Override

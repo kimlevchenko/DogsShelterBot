@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pro.sky.telegrambot.model.adoption.Adoption;
+import pro.sky.telegrambot.model.adoption.AdoptionDTO;
 import pro.sky.telegrambot.model.entity.ShelterId;
 import pro.sky.telegrambot.service.AdoptionService;
 
@@ -42,7 +43,7 @@ public class AdoptionController {
                     description = "Новое усыновление",
                     content = @Content(
                             mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = Adoption.class)
+                            schema = @Schema(implementation = AdoptionDTO.class)
                     )
             )
     )
@@ -50,11 +51,11 @@ public class AdoptionController {
     public ResponseEntity<Adoption> createAdoption(
             @Parameter(description = "Идентификатор приюта")
             @PathVariable(name = "shelter_id") ShelterId shelterId,
-            @RequestBody Adoption adoption
+            @RequestBody AdoptionDTO adoptionDTO
     ) {
         return ResponseEntity.ok(
                 adoptionService.createAdoption(shelterId,
-                        adoption.getUserId(), adoption.getAnimalId(), adoption.getTrialDate()));
+                        adoptionDTO.getUserId(), adoptionDTO.getAnimalId(), adoptionDTO.getTrialDate()));
     }
 
     @Operation(summary = "Поиск усыновления по идентификатору",

@@ -26,9 +26,9 @@ public abstract class Adoption {
     public Adoption() {
     }
 
-    public Adoption(User user, LocalDate date, LocalDate trialDate) {
+    public Adoption(User user, LocalDate trialDate) {
         this.user = user;
-        this.date = date;
+        this.date = LocalDate.now();
         this.trialDate = trialDate;
     }
 
