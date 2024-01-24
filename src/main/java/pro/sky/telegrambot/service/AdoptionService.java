@@ -8,12 +8,6 @@ import javax.persistence.EntityNotFoundException;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
-import pro.sky.telegrambot.exception.ShelterNotFoundException;
-/*import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import pro.sky.courseworktelegrambot.entities.*;
-import pro.sky.courseworktelegrambot.exceptions.TelegramException;
-import pro.sky.courseworktelegrambot.exceptions.UserOrPetIsBusyException;
-import pro.sky.courseworktelegrambot.repositories.*;*/
 import pro.sky.telegrambot.exception.TelegramApiException;
 import pro.sky.telegrambot.exception.UserOrAnimalIsBusyException;
 import pro.sky.telegrambot.listener.TelegramBotUpdatesListener;
@@ -254,6 +248,10 @@ public class AdoptionService {
         } else {
             return adoptionList.get(0);
         }
+    }
+
+    public Adoption setTrialDate(ShelterId shelterId, Integer adoptionId, LocalDate trialDate) {
+        return setTrialDate(shelterId, adoptionId, trialDate);
     }
 }
 

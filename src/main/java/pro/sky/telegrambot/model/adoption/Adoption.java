@@ -89,4 +89,12 @@ public abstract class Adoption {
                 ", trialDate=" + trialDate +
                 '}';
     }
+
+    public int getAnimalId() {
+        return getAnimalId();
+    }
+
+    public long getUserId() {
+        return getUserId();
+    }
 }

@@ -15,7 +15,7 @@ public class CatReport extends Report {
     private CatAdoption adoption;
 
     @Override
-    public CatAdoption getAdoption() {
+    public Object getAdoption() {
         return adoption;
     }
 
@@ -26,7 +26,7 @@ public class CatReport extends Report {
         this.adoption = adoption;
     }
 
-    public CatReport(CatAdoption adoption) {
+    public CatReport(CatAdoption adoption, LocalDate now, byte[] data, String mediaType, Long fileSize, String text) {
         this.adoption = adoption;
     }
 

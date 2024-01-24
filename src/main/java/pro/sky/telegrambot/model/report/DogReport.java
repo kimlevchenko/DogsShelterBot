@@ -15,7 +15,7 @@ public class DogReport extends Report {
     private DogAdoption adoption;
 
     @Override
-    public DogAdoption getAdoption() {
+    public Object getAdoption() {
         return adoption;
     }
 
@@ -25,7 +25,7 @@ public class DogReport extends Report {
         this.adoption = adoption;
     }
 
-    public DogReport(DogAdoption adoption) {
+    public DogReport(DogAdoption adoption, LocalDate now, byte[] data, String mediaType, Long fileSize, String text) {
         this.adoption = adoption;
     }
 

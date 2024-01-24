@@ -1,6 +1,5 @@
 package pro.sky.telegrambot.model.report;
 
-import pro.sky.telegrambot.model.adoption.Adoption;
 import pro.sky.telegrambot.model.animal.Animal;
 
 import javax.persistence.*;
@@ -46,7 +45,7 @@ public abstract class Report {
         return id;
     }
 
-    public abstract Adoption getAdoption();
+    public abstract Object getAdoption();
 
     public void setId(Long id) {
         this.id = id;
