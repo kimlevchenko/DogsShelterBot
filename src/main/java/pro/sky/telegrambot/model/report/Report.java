@@ -1,5 +1,6 @@
 package pro.sky.telegrambot.model.report;
 
+import pro.sky.telegrambot.model.adoption.DogAdoption;
 import pro.sky.telegrambot.model.animal.Animal;
 
 import javax.persistence.*;
@@ -25,13 +26,13 @@ public abstract class Report {
     private Animal animal;
     private String text; // текст отчета
 
-    public Report(Long id, String filePath, Long fileSize, String mediaType,
-                  LocalDate date, byte[] data, Animal animal, String text) {
+    public Report(Long id, String filePath,
+                  byte[] data, String text) {
         this.id = id;
         this.filePath = filePath;
         this.fileSize = fileSize;
         this.mediaType = mediaType;
-        this.date = date;
+        this.date = LocalDate.now();
         this.data = data;
         this.animal = animal;
         this.text = text;

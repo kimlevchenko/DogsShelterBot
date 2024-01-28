@@ -18,7 +18,6 @@ public class CatAdoption extends Adoption {
     private Cat animal;
 
     public CatAdoption() {
-
     }
 
     @Override

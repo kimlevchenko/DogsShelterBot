@@ -1,6 +1,7 @@
 package pro.sky.telegrambot.model.report;
 
 import pro.sky.telegrambot.model.adoption.CatAdoption;
+import pro.sky.telegrambot.model.adoption.DogAdoption;
 import pro.sky.telegrambot.model.animal.Animal;
 
 import javax.persistence.Entity;
@@ -19,14 +20,8 @@ public class CatReport extends Report {
         return adoption;
     }
 
-    public CatReport(Long id, String filePath, Long fileSize, String mediaType,
-                     LocalDate date, byte[] data, Animal animal, String text,
-                     CatAdoption adoption) {
-        super(id, filePath, fileSize, mediaType, date, data, animal, text);
-        this.adoption = adoption;
-    }
-
     public CatReport(CatAdoption adoption, LocalDate now, byte[] data, String mediaType, Long fileSize, String text) {
+        super(fileSize, mediaType, data, text);
         this.adoption = adoption;
     }
 

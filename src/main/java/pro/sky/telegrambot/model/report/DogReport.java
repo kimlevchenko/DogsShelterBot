@@ -1,7 +1,6 @@
 package pro.sky.telegrambot.model.report;
 
 import pro.sky.telegrambot.model.adoption.DogAdoption;
-import pro.sky.telegrambot.model.animal.Animal;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -14,30 +13,24 @@ public class DogReport extends Report {
     @ManyToOne
     private DogAdoption adoption;
 
+    public DogReport(DogAdoption adoption, LocalDate now, byte[] data, String mediaType, Long fileSize, String text) {
+        super(fileSize, mediaType, data, text);
+        this.adoption = adoption;
+    }
+
+    public DogReport() {
+
+    }
+
     @Override
     public Object getAdoption() {
         return adoption;
     }
 
-    public DogReport(Long id, String filePath, Long fileSize, String mediaType,
-                     LocalDate date, byte[] data, Animal animal, String text, DogAdoption adoption) {
-        super(id, filePath, fileSize, mediaType, date, data, animal, text);
-        this.adoption = adoption;
-    }
-
-    public DogReport(DogAdoption adoption, LocalDate now, byte[] data, String mediaType, Long fileSize, String text) {
-        this.adoption = adoption;
-    }
-
-    public DogReport() {
-    }
-
     @Override
     public String toString() {
         return "DogReport{" +
-                "id=" + getId() +
-                ", adoption=" + adoption +
-                ", date=" + getDate() +
-                "}";
+                "dogAdoption=" + adoption +
+                '}';
     }
 }

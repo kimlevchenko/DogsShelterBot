@@ -8,9 +8,6 @@ import javax.persistence.Table;
 @Table(name = "cat")
 public class Cat extends Animal {
 
-    @Id
-    private int id;
-
     public Cat() {
     }
 
@@ -21,13 +18,5 @@ public class Cat extends Animal {
         setAge(animal.getAge());
         setData(animal.getData());
         setAdopted(animal.isAdopted());
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getId() {
-        return id;
     }
 }
