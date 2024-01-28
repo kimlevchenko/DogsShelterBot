@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * Тестовый класс для PetController
+ * Тестовый класс для AnimalController
  */
 @WebMvcTest(AnimalController.class)
 public class AnimalControllerTest {
