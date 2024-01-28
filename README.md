@@ -85,3 +85,5 @@
 - [Ким Левченко](https://github.com/kimlevchenko)
 - [Александр Лиханов](https://github.com/Alexlikhanov2011)
 - [Елена Ермолаева](https://github.com/elena161284)
+- [Марк Панков](https://github.com/markpan07)
+- [Светлана Брюховецкая](https://github.com/dabich626626)
