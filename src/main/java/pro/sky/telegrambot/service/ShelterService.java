@@ -175,7 +175,7 @@ public class ShelterService {
      * @throws ShelterNotFoundException выбрасывается если базовое поле не найдено.
      */
 
-    public void checkShelterId(ShelterId shelterId) {
+    public void checkShelterIdGender(ShelterId shelterId) {
         if (shelterId == null) {
             throw new ShelterNotFoundException("NULL");
         }
@@ -188,4 +188,12 @@ public class ShelterService {
         return shelters.stream().filter(shelter -> shelter.getId() == shelterId).toList().get(0).getName();
     }
 
+    public void checkShelterIdGender(String gender) {
+        if (gender == null) {
+            throw new ShelterNotFoundException("NULL");
+        }
+        if (!shelters.stream().map(Shelter::getId).toList().contains(gender)) {
+            throw new ShelterNotFoundException(gender.toString());
+        }
+    }
 }

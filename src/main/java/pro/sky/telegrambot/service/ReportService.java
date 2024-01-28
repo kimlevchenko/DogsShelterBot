@@ -19,7 +19,6 @@ import pro.sky.telegrambot.model.report.Report;
 import pro.sky.telegrambot.repository.CatReportRepository;
 import pro.sky.telegrambot.repository.DogReportRepository;
 import pro.sky.telegrambot.repository.UserRepository;
-import pro.sky.telegrambot.service.ShelterService;
 
 
 import javax.persistence.EntityNotFoundException;
@@ -119,7 +118,7 @@ public class ReportService {
      * @throws EntityNotFoundException  если id отчета не найден в базе
      */
     public Report getReportById(ShelterId shelterId, int reportId) {
-        shelterService.checkShelterId(shelterId);
+        shelterService.checkShelterIdGender(shelterId);
         return reportRepository(shelterId).findById(reportId).orElseThrow(() ->
                 new EntityNotFoundException("Report with id " + reportId + " in shelter " + shelterId + " not found"));
     }
@@ -135,7 +134,7 @@ public class ReportService {
      * @throws EntityNotFoundException  если id отчета не найден в базе
      */
     public Report deleteReportById(ShelterId shelterId, int reportId) {
-        shelterService.checkShelterId(shelterId);
+        shelterService.checkShelterIdGender(shelterId);
         Report report = getReportById(shelterId, reportId);
         reportRepository(shelterId).deleteById(reportId);
         return report;
@@ -150,7 +149,7 @@ public class ReportService {
      * @throws ShelterNotFoundException если id приюта не найден в базе
      */
     public List<Report> getAllReportsByDate(ShelterId shelterId, LocalDate date) {
-        shelterService.checkShelterId(shelterId);
+        shelterService.checkShelterIdGender(shelterId);
         if (shelterId == ShelterId.DOG) {
             return List.copyOf(dogReportRepository.findByDate(date));
         } else {
@@ -167,7 +166,7 @@ public class ReportService {
      * @throws ShelterNotFoundException если id приюта не найден в базе
      */
     public List<Report> getAllReports(ShelterId shelterId) {
-        shelterService.checkShelterId(shelterId);
+        shelterService.checkShelterIdGender(shelterId);
         return List.copyOf(reportRepository(shelterId).findAll());
     }
 

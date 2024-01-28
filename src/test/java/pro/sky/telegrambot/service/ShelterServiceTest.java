@@ -1,7 +1,5 @@
 package pro.sky.telegrambot.service;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -105,7 +103,7 @@ public class ShelterServiceTest {
     @Test
     public void checkShelterIdNegativeShelterIdIsNullTest() {
         ShelterId shelterId = null;
-        assertThatExceptionOfType(ShelterNotFoundException.class).isThrownBy(() -> shelterService.checkShelterId(shelterId));
+        assertThatExceptionOfType(ShelterNotFoundException.class).isThrownBy(() -> shelterService.checkShelterIdGender(shelterId));
     }
 
 

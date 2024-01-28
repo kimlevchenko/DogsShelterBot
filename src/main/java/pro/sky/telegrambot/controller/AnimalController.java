@@ -144,4 +144,27 @@ public class AnimalController {
             @PathVariable("shelter_id") ShelterId shelterId) {
         return ResponseEntity.ok(animalService.getAllAnimals(shelterId));
     }
+
+    @GetMapping("/animals/{shelterId}/gender")
+    @Operation(
+            summary = "Поиск всех питомцев по полу",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Все найденные питомцы",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = Animal.class)
+                            )
+                    )
+            }
+    )
+    public Collection<Animal> getAllAnimalsByGender(
+            @Parameter(description = "Идентификатор приюта", required = true)
+            @PathVariable("shelterId") ShelterId shelterId,
+            @Parameter(description = "Пол животных", required = true)
+            @RequestParam("gender") String gender
+    ) {
+        return animalService.getAllAnimalsGender(shelterId, gender);
+    }
 }

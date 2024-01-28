@@ -75,7 +75,7 @@ public class AdoptionService {
      * @throws UserOrAnimalIsBusyException если пользователь или питомец уже имеют испытательный срок.
      */
     public Adoption createAdoption(ShelterId shelterId, long userId, int animalId, LocalDate trialDate) {
-        shelterService.checkShelterId(shelterId);
+        shelterService.checkShelterIdGender(shelterId);
 
         //Проверяем, что заданный User есть
         User user = userRepository.findById(userId).orElseThrow(() ->
@@ -132,7 +132,7 @@ public class AdoptionService {
      * @throws EntityNotFoundException если не найден id усыновления
      */
     public Adoption getAdoption(ShelterId shelterId, int adoptionId) {
-        shelterService.checkShelterId(shelterId);
+        shelterService.checkShelterIdGender(shelterId);
         return adoptionRepository(shelterId).findById(adoptionId)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Adoption with id " + adoptionId + " for shelter " + shelterId + " not found"));
@@ -152,7 +152,7 @@ public class AdoptionService {
      * @throws TelegramException       если не найден не состоялось уведомление пользователя
      */
     public Adoption setTrialDate(ShelterId shelterId, Integer adoptionId, LocalDate trialDate, Exception Exception) throws TelegramException {
-        shelterService.checkShelterId(shelterId);
+        shelterService.checkShelterIdGender(shelterId);
 
         Adoption adoption = adoptionRepository(shelterId).findById(adoptionId).orElseThrow(() -> new EntityNotFoundException(
                 "Adoption with id " + adoptionId + " for shelter " + shelterId + " not found"));
@@ -184,7 +184,7 @@ public class AdoptionService {
      * @throws EntityNotFoundException если не найден id усыновления
      */
     public Adoption deleteAdoption(ShelterId shelterId, int adoptionId) {
-        shelterService.checkShelterId(shelterId);
+        shelterService.checkShelterIdGender(shelterId);
         Adoption adoption = getAdoption(shelterId, adoptionId);
         adoptionRepository(shelterId).deleteById(adoptionId);
         return adoption;
@@ -199,7 +199,7 @@ public class AdoptionService {
      * // * @throws ShelterNotFoundException если приют не найден.
      */
     public Collection<Adoption> getAllAdoptions(ShelterId shelterId) {
-        shelterService.checkShelterId(shelterId);
+        shelterService.checkShelterIdGender(shelterId);
         return List.copyOf(adoptionRepository(shelterId).findAll());
     }
 
@@ -211,7 +211,7 @@ public class AdoptionService {
      * // * @throws ShelterNotFoundException если приют не найден.
      */
     public Collection<Adoption> getAllActiveAdoptions(ShelterId shelterId) {
-        shelterService.checkShelterId(shelterId);
+        shelterService.checkShelterIdGender(shelterId);
         if (shelterId == ShelterId.DOG) {
             return List.copyOf(dogAdoptionRepository
                     .findByDateLessThanEqualAndTrialDateGreaterThanEqual(LocalDate.now(), LocalDate.now()));

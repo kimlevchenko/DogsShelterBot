@@ -30,14 +30,14 @@ public class AnimalService {
     }
 
     public Animal getAnimal(ShelterId shelterId, int id) {
-        shelterService.checkShelterId(shelterId);
+        shelterService.checkShelterIdGender(shelterId);
         return animalRepository(shelterId).findById(id)
                 .orElseThrow(() ->
                         new EntityNotFoundException("Animal with id " + id + " in shelter " + shelterId + " not found"));
     }
 
     public Animal createAnimal(ShelterId shelterId, Animal animal) {
-        shelterService.checkShelterId(shelterId);
+        shelterService.checkShelterIdGender(shelterId);
         if (shelterId == ShelterId.DOG) {
             Dog dog = new Dog(animal);
             dog.setId(0);
@@ -50,7 +50,7 @@ public class AnimalService {
     }
 
     public Animal updateAnimal(ShelterId shelterId, Animal animal) {
-        shelterService.checkShelterId(shelterId);
+        shelterService.checkShelterIdGender(shelterId);
         getAnimal(shelterId, animal.getId());
         if (shelterId == ShelterId.DOG) {
             return dogRepository.save(new Dog(animal));
@@ -60,14 +60,19 @@ public class AnimalService {
     }
 
     public Animal deleteAnimal(ShelterId shelterId, int id) {
-        shelterService.checkShelterId(shelterId);
+        shelterService.checkShelterIdGender(shelterId);
         Animal animal = getAnimal(shelterId, id);
         animalRepository(shelterId).deleteById(id);
         return animal;
     }
 
     public Collection<Animal> getAllAnimals(ShelterId shelterId) {
-        shelterService.checkShelterId(shelterId);
+        shelterService.checkShelterIdGender(shelterId);
+        return List.copyOf(animalRepository(shelterId).findAll());
+    }
+
+    public Collection<Animal> getAllAnimalsGender(ShelterId shelterId, String gender) {
+        shelterService.checkShelterIdGender(gender);
         return List.copyOf(animalRepository(shelterId).findAll());
     }
 }
