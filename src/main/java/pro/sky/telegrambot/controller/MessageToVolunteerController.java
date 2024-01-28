@@ -42,7 +42,7 @@ public class MessageToVolunteerController {
         return messageToVolunteerService.findAllWithoutAnswer();
     }
 
-   /* @Operation(
+    @Operation(
             summary = "Возвращает ответ от волонтера и вставляет его в поле answer",
             responses = {
                     @ApiResponse(
@@ -59,7 +59,7 @@ public class MessageToVolunteerController {
                              @RequestParam boolean replyToMessage)
     {
         messageToVolunteerService.updateAnswer(id, answer, replyToMessage);
-    }*/
+    }
 
 
 }

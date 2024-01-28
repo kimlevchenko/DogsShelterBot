@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import pro.sky.telegrambot.exception.MessageToVolunteerNotFoundException;
+import pro.sky.telegrambot.exception.TelegramApiException;
+import pro.sky.telegrambot.exception.TelegramException;
 import pro.sky.telegrambot.listener.TelegramBotUpdatesListener;
 import pro.sky.telegrambot.model.entity.MessageToVolunteer;
 import pro.sky.telegrambot.model.entity.User;
@@ -69,7 +71,7 @@ public class MessageToVolunteerService {
      * @param answerToMessage если True, то уйдет сообщение с включенным в ответ вопросом
      * @throws MessageToVolunteerNotFoundException если объект не найден.
      */
-   /* public void updateAnswer (int id, String answer, boolean answerToMessage) {
+    public void updateAnswer(int id, String answer, boolean answerToMessage) {
         MessageToVolunteer messageToVolunteer = messageToVolunteerRepository.findById(id)
                 .orElseThrow(() -> new MessageToVolunteerNotFoundException(id));
         messageToVolunteer.setAnswerTime(LocalDateTime.now());
@@ -82,5 +84,5 @@ public class MessageToVolunteerService {
             throw new TelegramException(); //при ошибке отметку об отправке ответа (дату ответа) не сохраняем
         }
         messageToVolunteerRepository.save(messageToVolunteer);
-    }*/
+    }
 }

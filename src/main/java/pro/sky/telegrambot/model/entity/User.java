@@ -1,9 +1,9 @@
 package pro.sky.telegrambot.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import pro.sky.telegrambot.model.state.State;
 
 import javax.persistence.*;
-import javax.swing.plaf.nimbus.State;
 import java.time.LocalDateTime;
 
 @Entity
@@ -14,16 +14,16 @@ public class User {
     private String name;
     @Enumerated(EnumType.STRING)
     private ShelterId shelterId;
-    // @ManyToOne  //по умолчанию (fetch = FetchType.EAGER)
-    //  private State state;
-//    @ManyToOne
-//    private State previousState;
+    @ManyToOne  //по умолчанию (fetch = FetchType.EAGER)
+    private State state;
+    @ManyToOne
+    private State previousState;
     private LocalDateTime stateTime;
 
     public User(long id, String name, State state) {  //для создания нового
         this.id = id;
         this.name = name;
-//        this.state = state;
+        this.state = state;
     }
 
     public User() {  //для JPA репозитория
@@ -36,23 +36,24 @@ public class User {
     public void setId(long id) {
         this.id = id;
     }
-//    @JsonIgnore
-//    public State getState() {
-//        return state;
-//    }
-//
-//    public void setState(State state) {
-//        this.state = state;
-//    }
-//
-//    @JsonIgnore
-//    public State getPreviousState() {
-//        return previousState;
-//    }
-//
-//    public void setPreviousState(State previousState) {
-//        this.previousState = previousState;
-//    }
+
+    @JsonIgnore
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
+    @JsonIgnore
+    public State getPreviousState() {
+        return previousState;
+    }
+
+    public void setPreviousState(State previousState) {
+        this.previousState = previousState;
+    }
 
     @JsonIgnore
     public ShelterId getShelterId() {
