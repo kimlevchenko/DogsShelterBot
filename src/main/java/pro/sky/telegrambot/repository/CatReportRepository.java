@@ -2,6 +2,7 @@ package pro.sky.telegrambot.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import pro.sky.telegrambot.model.adoption.Adoption;
 import pro.sky.telegrambot.model.adoption.CatAdoption;
 import pro.sky.telegrambot.model.report.CatReport;
 
@@ -21,5 +22,4 @@ public interface CatReportRepository extends JpaRepository<CatReport, Integer> {
             "and text is not null " +
             "order by date desc limit 1", nativeQuery = true)
     CatReport findLatestReport(Integer adoption_id);
-
 }
