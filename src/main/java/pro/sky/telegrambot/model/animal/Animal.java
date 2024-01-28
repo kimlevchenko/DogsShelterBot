@@ -64,13 +64,13 @@ public class Animal {
         this.gender = gender;
     }
 
-//    public Shelter getShelters() {
-//        return shelters;
-//    }
-//
-//    public void setShelters(Shelter shelters) {
-//        this.shelters = shelters;
-//    }
+    public Shelter getShelters() {
+        return shelters;
+    }
+
+    public void setShelters(Shelter shelters) {
+        this.shelters = shelters;
+    }
 
     public byte[] getData() {
         return data;
