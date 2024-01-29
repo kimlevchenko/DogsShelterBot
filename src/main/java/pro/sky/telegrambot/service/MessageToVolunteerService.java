@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import pro.sky.telegrambot.exception.MessageToVolunteerNotFoundException;
 import pro.sky.telegrambot.exception.TelegramApiException;
 import pro.sky.telegrambot.exception.TelegramException;
-import pro.sky.telegrambot.listener.TelegramBotUpdatesListener;
+import pro.sky.telegrambot.configuration.TelegramBotUpdatesListener;
 import pro.sky.telegrambot.model.entity.MessageToVolunteer;
 import pro.sky.telegrambot.model.entity.User;
 import pro.sky.telegrambot.repository.MessageToVolunteerRepository;

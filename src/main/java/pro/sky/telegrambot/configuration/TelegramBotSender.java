@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Profile;
 
 @Configuration
 @Profile("!test")
-public class TelegramBotConfiguration {
+public class TelegramBotSender {
     @Value("${telegram.bot.token}")
     private String token;
 

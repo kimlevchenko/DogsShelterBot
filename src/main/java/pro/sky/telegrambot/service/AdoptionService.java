@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import pro.sky.telegrambot.exception.TelegramApiException;
 import pro.sky.telegrambot.exception.UserOrAnimalIsBusyException;
-import pro.sky.telegrambot.listener.TelegramBotUpdatesListener;
+import pro.sky.telegrambot.configuration.TelegramBotUpdatesListener;
 import pro.sky.telegrambot.model.adoption.Adoption;
 import pro.sky.telegrambot.model.adoption.CatAdoption;
 import pro.sky.telegrambot.model.adoption.DogAdoption;
