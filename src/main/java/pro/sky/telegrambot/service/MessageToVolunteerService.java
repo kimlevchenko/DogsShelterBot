@@ -4,10 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import pro.sky.telegrambot.exception.MessageToVolunteerNotFoundException;
-import pro.sky.telegrambot.exception.TelegramApiException;
 import pro.sky.telegrambot.exception.TelegramException;
-import pro.sky.telegrambot.configuration.TelegramBotUpdatesListener;
+import pro.sky.telegrambot.configuration.TelegramBotSender;
 import pro.sky.telegrambot.model.entity.MessageToVolunteer;
 import pro.sky.telegrambot.model.entity.User;
 import pro.sky.telegrambot.repository.MessageToVolunteerRepository;
@@ -23,14 +23,14 @@ import java.util.List;
 public class MessageToVolunteerService {
     private static final Logger LOGGER = LoggerFactory.getLogger(MessageToVolunteerService.class);
 
-    private final TelegramBotUpdatesListener telegramBotUpdatesListener;  //для посылки ответов
+    private final TelegramBotSender telegramBotSender;  //для посылки ответов
     private final MessageToVolunteerRepository messageToVolunteerRepository;
 
 
     public MessageToVolunteerService(
-            TelegramBotUpdatesListener telegramBotUpdatesListener,
+            TelegramBotSender telegramBotSender,
             MessageToVolunteerRepository messageToVolunteerRepository) {
-        this.telegramBotUpdatesListener = telegramBotUpdatesListener;
+        this.telegramBotSender = telegramBotSender;
         this.messageToVolunteerRepository = messageToVolunteerRepository;
     }
 
@@ -77,7 +77,7 @@ public class MessageToVolunteerService {
         messageToVolunteer.setAnswerTime(LocalDateTime.now());
         messageToVolunteer.setAnswer(answer);
         try {
-            telegramBotUpdatesListener.sendMessageToUser(messageToVolunteer.getUser(), answer, answerToMessage ? id : 0);
+            telegramBotSender.sendMessageToUser(messageToVolunteer.getUser(), answer, answerToMessage ? id : 0);
         } catch (TelegramApiException e) {
             LOGGER.error("Ошибка при отправке ответа волонтера "+e.getMessage());
             //TelegramException - это RunTimeException, в отличие от TelegramApiException

@@ -1,6 +1,6 @@
 package pro.sky.telegrambot.service;
 
-import com.pengrad.telegrambot.TelegramException;
+import pro.sky.telegrambot.exception.TelegramException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,9 +8,9 @@ import javax.persistence.EntityNotFoundException;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
-import pro.sky.telegrambot.exception.TelegramApiException;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import pro.sky.telegrambot.exception.UserOrAnimalIsBusyException;
-import pro.sky.telegrambot.configuration.TelegramBotUpdatesListener;
+import pro.sky.telegrambot.configuration.TelegramBotSender;
 import pro.sky.telegrambot.model.adoption.Adoption;
 import pro.sky.telegrambot.model.adoption.CatAdoption;
 import pro.sky.telegrambot.model.adoption.DogAdoption;
@@ -34,7 +34,7 @@ public class AdoptionService {
     private final DogAdoptionRepository dogAdoptionRepository;
     private final CatAdoptionRepository catAdoptionRepository;
     private final ShelterService shelterService;
-    private final TelegramBotUpdatesListener telegramBotUpdatesListener;
+    private final TelegramBotSender telegramBotSender;
 
     public AdoptionService(
             UserRepository userRepository,
@@ -43,14 +43,14 @@ public class AdoptionService {
             DogAdoptionRepository dogAdoptionRepository,
             CatAdoptionRepository catAdoptionRepository,
             ShelterService shelterService,
-            TelegramBotUpdatesListener telegramBotUpdatesListener) {
+            TelegramBotSender telegramBotSender) {
         this.userRepository = userRepository;
         this.dogRepository = dogRepository;
         this.catRepository = catRepository;
         this.dogAdoptionRepository = dogAdoptionRepository;
         this.catAdoptionRepository = catAdoptionRepository;
         this.shelterService = shelterService;
-        this.telegramBotUpdatesListener = telegramBotUpdatesListener;
+        this.telegramBotSender = telegramBotSender;
     }
 
     //из такого репозитория удается прочитать, возвращается предок
@@ -113,7 +113,7 @@ public class AdoptionService {
             adoption = catAdoptionRepository.save(catAdoption);
         }
         try {
-            telegramBotUpdatesListener.sendMessageToUser(adoption.getUser(),
+            telegramBotSender.sendMessageToUser(adoption.getUser(),
                     adoption.getUser().getName() + ", поздравляем с усыновлением нашего питомца! " +
                             "Вам назначен испытательный срок до " + trialDate.toString(), 0);
         } catch (TelegramApiException e) {
@@ -158,12 +158,12 @@ public class AdoptionService {
                 "Adoption with id " + adoptionId + " for shelter " + shelterId + " not found"));
         long days = ChronoUnit.DAYS.between(adoption.getTrialDate(), trialDate);
         try {
-            telegramBotUpdatesListener.sendMessageToUser(adoption.getUser(), "ВНИМАНИЕ !!! " +
+            telegramBotSender.sendMessageToUser(adoption.getUser(), "ВНИМАНИЕ !!! " +
                     "Вам увеличен испытательный срок на " + days + " дней до " + trialDate.toString(), 0);
         } catch (TelegramApiException e) {
             LOGGER.error("Ошибка при попытке изменить испытательный срок " + e.getMessage());
             //TelegramException - это RunTimeException, в отличие от TelegramApiException
-            throw new TelegramException(Exception); //при ошибке срок не меняем и не сохраняем
+            throw new TelegramException(); //при ошибке срок не меняем и не сохраняем
         }
         adoption.setTrialDate(trialDate);
         if (shelterId == ShelterId.DOG) {
