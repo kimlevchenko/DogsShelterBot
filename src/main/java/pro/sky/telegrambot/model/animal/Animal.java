@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Objects;
 
-@MappedSuperclass
+@Entity
 public class Animal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
