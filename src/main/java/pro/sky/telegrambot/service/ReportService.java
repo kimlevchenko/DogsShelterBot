@@ -4,10 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
-import pro.sky.telegrambot.exception.TelegramApiException;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import pro.sky.telegrambot.exception.ShelterNotFoundException;
 import pro.sky.telegrambot.exception.TelegramException;
-import pro.sky.telegrambot.configuration.TelegramBotUpdatesListener;
+import pro.sky.telegrambot.configuration.TelegramBotSender;
 import pro.sky.telegrambot.model.adoption.Adoption;
 import pro.sky.telegrambot.model.adoption.CatAdoption;
 import pro.sky.telegrambot.model.adoption.DogAdoption;
@@ -32,19 +32,19 @@ public class ReportService {
     private final CatReportRepository catReportRepository;
     private final ShelterService shelterService;
     private final UserRepository userRepository;
-    private final TelegramBotUpdatesListener telegramBotUpdatesListener;
+    private final TelegramBotSender telegramBotSender;
 
 
     public ReportService(CatReportRepository catReportRepository,
                          DogReportRepository dogReportRepository,
                          ShelterService shelterService,
                          UserRepository userRepository,
-                         TelegramBotUpdatesListener telegramBotUpdatesListener) {
+                         TelegramBotSender telegramBotSender) {
         this.dogReportRepository = dogReportRepository;
         this.catReportRepository = catReportRepository;
         this.shelterService = shelterService;
         this.userRepository = userRepository;
-        this.telegramBotUpdatesListener = telegramBotUpdatesListener;
+        this.telegramBotSender = telegramBotSender;
     }
 
     //из такого репозитория удается прочитать, возвращается предок
@@ -207,7 +207,7 @@ public class ReportService {
         User user = userRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("User with id " + id + " not found"));
         try {
-            telegramBotUpdatesListener.sendMessageToUser(
+            telegramBotSender.sendMessageToUser(
                     user, "Дорогой усыновитель, мы заметили, что ты заполняешь отчет не так подробно, как необходимо. " +
                             "Пожалуйста, подойди ответственнее к этому занятию. В противном случае волонтеры приюта будут обязаны " +
                             "самолично проверять условия содержания животного", 0);
