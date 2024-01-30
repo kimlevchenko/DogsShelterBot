@@ -1,6 +1,5 @@
 package pro.sky.telegrambot.model.report;
 
-import pro.sky.telegrambot.model.adoption.DogAdoption;
 import pro.sky.telegrambot.model.animal.Animal;
 
 import javax.persistence.*;
@@ -15,25 +14,27 @@ public abstract class Report {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String filePath; // где лежит файл
-    private Long fileSize; // размер файла
+    private Long mediaSize; // размер файла
     private String mediaType; // тип картинки, который будем передавать
     private LocalDate date; // дата отчета
 
     @Lob
-    private byte[] data; // картинка, байт(массив)
+    private byte[] photo; // картинка, байт(массив)
     @OneToOne
     @JoinColumn(name = "animal")
     private Animal animal;
     private String text; // текст отчета
+    private boolean photoPresented;
+    private boolean textPresented;
 
     public Report(Long id, String filePath,
-                  byte[] data, String text) {
+                  byte[] photo, String text) {
         this.id = id;
         this.filePath = filePath;
-        this.fileSize = fileSize;
+        this.mediaSize = mediaSize;
         this.mediaType = mediaType;
         this.date = LocalDate.now();
-        this.data = data;
+        this.photo = photo;
         this.animal = animal;
         this.text = text;
     }
@@ -60,12 +61,12 @@ public abstract class Report {
         this.filePath = filePath;
     }
 
-    public Long getFileSize() {
-        return fileSize;
+    public Long getMediaSize() {
+        return mediaSize;
     }
 
-    public void setFileSize(Long fileSize) {
-        this.fileSize = fileSize;
+    public void setMediaSize(Long mediaSize) {
+        this.mediaSize = mediaSize;
     }
 
     public String getMediaType() {
@@ -84,12 +85,12 @@ public abstract class Report {
         this.date = date;
     }
 
-    public byte[] getData() {
-        return data;
+    public byte[] getPhoto() {
+        return photo;
     }
 
-    public void setData(byte[] data) {
-        this.data = data;
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
     }
 
     public Animal getAnimal() {
@@ -113,13 +114,13 @@ public abstract class Report {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Report report = (Report) o;
-        return Objects.equals(id, report.id) && Objects.equals(filePath, report.filePath) && Objects.equals(fileSize, report.fileSize) && Objects.equals(mediaType, report.mediaType) && Objects.equals(date, report.date) && Arrays.equals(data, report.data) && Objects.equals(animal, report.animal) && Objects.equals(text, report.text);
+        return Objects.equals(id, report.id) && Objects.equals(filePath, report.filePath) && Objects.equals(mediaSize, report.mediaSize) && Objects.equals(mediaType, report.mediaType) && Objects.equals(date, report.date) && Arrays.equals(photo, report.photo) && Objects.equals(animal, report.animal) && Objects.equals(text, report.text);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, filePath, fileSize, mediaType, date, animal, text);
-        result = 31 * result + Arrays.hashCode(data);
+        int result = Objects.hash(id, filePath, mediaSize, mediaType, date, animal, text);
+        result = 31 * result + Arrays.hashCode(photo);
         return result;
     }
 
@@ -128,12 +129,28 @@ public abstract class Report {
         return "Report{" +
                 "id=" + id +
                 ", filePath='" + filePath + '\'' +
-                ", fileSize=" + fileSize +
+                ", mediaSize=" + mediaSize +
                 ", mediaType='" + mediaType + '\'' +
                 ", date=" + date +
-                ", data=" + Arrays.toString(data) +
+                ", photo=" + Arrays.toString(photo) +
                 ", animal=" + animal +
                 ", text='" + text + '\'' +
                 '}';
+    }
+
+    public boolean getPhotoPresented() {
+        return photoPresented;
+    }
+
+    public void setPhotoPresented(boolean photoPresented) {
+        this.photoPresented = photoPresented;
+    }
+
+    public boolean getTextPresented() {
+        return textPresented;
+    }
+
+    public void setTextPresented(boolean textPresented) {
+        this.textPresented = textPresented;
     }
 }

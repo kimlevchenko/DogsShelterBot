@@ -2,7 +2,6 @@ package pro.sky.telegrambot.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import pro.sky.telegrambot.model.adoption.Adoption;
 import pro.sky.telegrambot.model.adoption.CatAdoption;
 import pro.sky.telegrambot.model.report.CatReport;
 
@@ -15,7 +14,7 @@ public interface CatReportRepository extends JpaRepository<CatReport, Integer> {
     //для бота для оценки состояния сдачи отчета
     List<CatReport> findByAdoptionAndDate(CatAdoption catAdoption, LocalDate date);
 
-    List<CatReport> findByDateAndDataIsNotNullAndTextIsNotNull(LocalDate date);
+    List<CatReport> findByDateAndPhotoIsNotNullAndTextIsNotNull(LocalDate date);
 
     @Query(value = "SELECT * FROM cat_report where adoption_id = ?1 " +
             "and data is not null " +

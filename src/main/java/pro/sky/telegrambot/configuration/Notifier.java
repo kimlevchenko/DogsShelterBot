@@ -12,7 +12,6 @@ import pro.sky.telegrambot.model.report.*;
 import pro.sky.telegrambot.model.entity.*;
 import pro.sky.telegrambot.repository.*;
 import pro.sky.telegrambot.service.MessageToVolunteerService;
-import pro.sky.telegrambot.configuration.TelegramBotSender;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -58,8 +57,8 @@ public class Notifier {
     /**
      * Проверяет каждый день в 21:01 все ежедневные отчеты усыновителей.<br>
      * Если усыновитель не прислал, или прислал не полный отчет напоминает ему об этом.Используется метод <u>sendNotification</u> этого сервиса.
-     * Полноту данных проверяем методамм {@link  DogReportRepository#findByDateAndDataIsNotNullAndTextIsNotNull(LocalDate)} и
-     * {@link CatReportRepository#findByDateAndDataIsNotNullAndTextIsNotNull(LocalDate)}
+     * Полноту данных проверяем методамм {@link  DogReportRepository#findByDateAndPhotoIsNotNullAndTextIsNotNull(LocalDate)} и
+     * {@link CatReportRepository#findByDateAndPhotoIsNotNullAndTextIsNotNull(LocalDate)}
      * Если усыновитель не присылает отчет более 2 дней извещает волонтера.
      * посредством {@link MessageToVolunteerRepository#save(Object)} save()}
      */
@@ -75,7 +74,7 @@ public class Notifier {
         Report report;
 
         List<DogAdoption> currentDogAdoptionList = dogAdoptionRepository.findByTrialDateGreaterThanEqual(LocalDate.now());
-        Map<Object, LocalDate> todayDogReports = dogReportRepository.findByDateAndDataIsNotNullAndTextIsNotNull(LocalDate.now())
+        Map<Object, LocalDate> todayDogReports = dogReportRepository.findByDateAndPhotoIsNotNullAndTextIsNotNull(LocalDate.now())
                 .stream()
                 .collect(Collectors.toMap(DogReport::getAdoption, Report::getDate));
         for (DogAdoption adoption : currentDogAdoptionList) {
@@ -97,7 +96,7 @@ public class Notifier {
         }
 
         List<CatAdoption> currentCatAdoptionList = catAdoptionRepository.findByTrialDateGreaterThanEqual(LocalDate.now());
-        Map<Object, LocalDate> todayCatReports = catReportRepository.findByDateAndDataIsNotNullAndTextIsNotNull(LocalDate.now())
+        Map<Object, LocalDate> todayCatReports = catReportRepository.findByDateAndPhotoIsNotNullAndTextIsNotNull(LocalDate.now())
                 .stream()
                 .collect(Collectors.toMap(CatReport::getAdoption, Report::getDate));
         for (CatAdoption adoption : currentCatAdoptionList) {

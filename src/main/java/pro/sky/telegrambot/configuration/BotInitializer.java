@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import org.telegram.telegrambots.meta.generics.TelegramBot;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
 import javax.annotation.PostConstruct;
@@ -19,7 +20,6 @@ public class BotInitializer {
     public BotInitializer(TelegramBot bot) {
         this.bot = bot;
     }
-
     /**
      * Метод инициализации приложения, который реагирует на событие ContextRefreshedEvent.
      * При вызове данного метода, он создает экземпляр TelegramBotsApi, затем регистрирует бота с этим API.

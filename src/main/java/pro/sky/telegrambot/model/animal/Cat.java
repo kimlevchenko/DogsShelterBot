@@ -1,7 +1,6 @@
 package pro.sky.telegrambot.model.animal;
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
@@ -15,8 +14,9 @@ public class Cat extends Animal {
         setId(animal.getId());
         setAnimalName(animal.getAnimalName());
         setBreed(animal.getBreed());
+        setGender(animal.getGender());
         setAge(animal.getAge());
-        setData(animal.getData());
+        setPhoto(animal.getPhoto());
         setAdopted(animal.isAdopted());
     }
 }

@@ -18,7 +18,7 @@ public class Animal {
     @ManyToOne
     @JoinColumn(name = "shelter")
     private Shelter shelters;
-    private byte[] data; // фото для каждого живoтного
+    private byte[] photo; // фото для каждого живoтного
     private boolean adopted; // статус животного
 
     public Animal() {
@@ -72,12 +72,12 @@ public class Animal {
         this.shelters = shelters;
     }
 
-    public byte[] getData() {
-        return data;
+    public byte[] getPhoto() {
+        return photo;
     }
 
-    public void setData(byte[] data) {
-        this.data = data;
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
     }
 
     public boolean isAdopted() {
@@ -95,13 +95,13 @@ public class Animal {
         Animal animal = (Animal) o;
         return id == animal.id && age == animal.age && adopted == animal.adopted &&
                 Objects.equals(breed, animal.breed) && Objects.equals(animalName, animal.animalName)
-                && Objects.equals(gender, animal.gender) && Arrays.equals(data, animal.data);
+                && Objects.equals(gender, animal.gender) && Arrays.equals(photo, animal.photo);
     }
 
     @Override
     public int hashCode() {
         int result = Objects.hash(id, breed, animalName, age, gender, adopted);
-        result = 31 * result + Arrays.hashCode(data);
+        result = 31 * result + Arrays.hashCode(photo);
         return result;
     }
 
@@ -113,7 +113,7 @@ public class Animal {
                 ", animalName='" + animalName + '\'' +
                 ", age=" + age +
                 ", gender='" + gender + '\'' +
-                ", data=" + Arrays.toString(data) +
+                ", photo=" + Arrays.toString(photo) +
                 ", adopted=" + adopted +
                 '}';
     }
