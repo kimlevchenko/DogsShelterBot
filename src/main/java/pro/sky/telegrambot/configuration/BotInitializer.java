@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import org.telegram.telegrambots.meta.generics.LongPollingBot;
 import org.telegram.telegrambots.meta.generics.TelegramBot;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
@@ -15,10 +16,10 @@ import javax.annotation.PostConstruct;
 public class BotInitializer {
     private static final Logger LOGGER = LoggerFactory.getLogger(BotInitializer.class);
 
-    private final TelegramBot bot;
+    private final TelegramBot telegramBot;
 
-    public BotInitializer(TelegramBot bot) {
-        this.bot = bot;
+    public BotInitializer(TelegramBot telegramBot) {
+        this.telegramBot = telegramBot;
     }
     /**
      * Метод инициализации приложения, который реагирует на событие ContextRefreshedEvent.
@@ -31,7 +32,7 @@ public class BotInitializer {
             // Создание экземпляра TelegramBotsApi с использованием DefaultBotSession.
             TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
             // Регистрация бота с TelegramBotsApi.
-            telegramBotsApi.registerBot(bot);
+            telegramBotsApi.registerBot((LongPollingBot) telegramBot);
         } catch (TelegramApiException e) {
             LOGGER.error("Error of creation or registration of bot occurred: " + e.getMessage());
         }
