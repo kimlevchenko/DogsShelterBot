@@ -25,6 +25,8 @@ public abstract class Report {
     @JoinColumn(name = "animal")
     private Animal animal;
     private String text; // текст отчета
+    private boolean photoPresented;
+    private boolean textPresented;
 
     public Report(Long id, String filePath,
                   byte[] data, String text) {
@@ -135,5 +137,21 @@ public abstract class Report {
                 ", animal=" + animal +
                 ", text='" + text + '\'' +
                 '}';
+    }
+
+    public boolean getPhotoPresented() {
+        return photoPresented;
+    }
+
+    public void setPhotoPresented(boolean photoPresented) {
+        this.photoPresented = photoPresented;
+    }
+
+    public boolean getTextPresented() {
+        return textPresented;
+    }
+
+    public void setTextPresented(boolean textPresented) {
+        this.textPresented = textPresented;
     }
 }
