@@ -1,6 +1,5 @@
 -- liquibase formatted sql
 --changeLogSync aleksandr:create_shelter
--- liquibase formatted sql
 CREATE TABLE shelter
 (
     id                   VARCHAR(3) PRIMARY KEY,
