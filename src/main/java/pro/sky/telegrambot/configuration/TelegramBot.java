@@ -87,7 +87,7 @@ public class TelegramBot extends TelegramBotSender {
         this.reportService = reportService;
     }
 
-    private JpaRepository<? extends Animal, Integer> petRepository(ShelterId shelterId) {
+    private JpaRepository<? extends Animal, Integer> animalRepository(ShelterId shelterId) {
         return (shelterId == ShelterId.DOG) ? dogRepository : catRepository;
     }
 
@@ -111,6 +111,7 @@ public class TelegramBot extends TelegramBotSender {
         });
         initialState.setButtons(buttons);
     }
+
 
     @Override
     //TelegramBotSender, чтобы стать реальным классом, уже переопределил этот метод пустышкой
@@ -206,19 +207,31 @@ public class TelegramBot extends TelegramBotSender {
             }
         }
 
+
         //выясняем, есть ли кнопки в текущем состоянии
+
         List<StateButton> buttons = state.getButtons();
+
         if (buttons.isEmpty() && !state.isTextInput() && !state.equals(initialState)) {
+
             //если кнопок нет и не состояние текстового ввода и не список приютов
+
             //то возвращаем состояние назад (к тому, что было при входе в обработку сообщения)
+
             //этот режим используем для вывода разной информации о приюте, оставаясь в прежнем состоянии
+
             user.setState(oldState);
+
             //дальше выводим текст нового и кнопки старого состояния
+
         }
 
         //Интересно, что у initialState будут свои кнопки, назначенные в @PostConstract из приютов
+
         //А у user.getState().getButtons() - для того же состояния кнопок не будет, т.к. в базе их нет
+
         //поэтому подменим кнопки у usera в начальном состоянии (выбора приюта)
+
         if (state.equals(initialState)) state.setButtons(initialState.getButtons()); //возьмем из initialState
 
         //бросает TelegramApiException
@@ -302,7 +315,7 @@ public class TelegramBot extends TelegramBotSender {
         byte[] photo = null; //пока так
         String text = null;
         String mediaType = null;
-        long mediaSize = 0;
+        int mediaSize = 0;
         if (message.hasPhoto()) {
             List<PhotoSize> photoSizes = message.getPhoto();
             PhotoSize largestPhoto = photoSizes.get(photoSizes.size() - 1); // получаем последний и самый большой вариант фото
@@ -334,7 +347,7 @@ public class TelegramBot extends TelegramBotSender {
         //найдем активное усыновление пользователя
         Adoption adoption = adoptionService.getActiveAdoption(user, LocalDate.now());
         if (adoption != null) { //если усыновление найдено
-            report = reportService.saveReport(adoption, LocalDate.now(), photo, mediaType, mediaSize, text);
+            report = reportService.saveReport(adoption, LocalDate.now(), photo, mediaType, (long) mediaSize, text);
         }
         //если после сохранения report=null, значит у юзера не было испытательного срока
         //в этом случае reportRequestText побочным действием вернет его предыдущее состояние
@@ -403,7 +416,7 @@ public class TelegramBot extends TelegramBotSender {
         //вызывается после вывода сообщения состояния AnimalList - Наши питомцы
         String searchTerm; //можно запросить условия отбора, но пока не сделали
         //посылаем картинки из базы. Пока только toString животных.
-        String text = petRepository(user.getShelterId()).findAll().toString();
+        String text = animalRepository(user.getShelterId()).findAll().toString();
         sendMessageToUser(user, text, 0);
     }
 
@@ -418,7 +431,7 @@ public class TelegramBot extends TelegramBotSender {
         String text = message.getText();
         //проверить, что число
         int id = Integer.parseInt(text);
-        JpaRepository<? extends Animal, Integer> repository = petRepository(user.getShelterId());
+        JpaRepository<? extends Animal, Integer> repository = animalRepository(user.getShelterId());
         Animal animal = repository.findById(id).orElse(null);
 
         if (animal == null) {

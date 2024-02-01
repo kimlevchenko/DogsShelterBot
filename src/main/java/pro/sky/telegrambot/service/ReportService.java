@@ -60,26 +60,27 @@ public class ReportService {
      * Если для заданного усыновления и даты отчет найден, то он дополняется,
      * если нет, то создается новый
      *
-     * @param adoption активное усыновление пользователя
-     * @param date     дата отчета
-     * @param data     фото отчета, может быть null, если прислан текст
-     * @param text     текст отчета, может быть null, если прислано фото
+     * @param adoption  активное усыновление пользователя
+     * @param date      дата отчета
+     * @param photo     фото отчета, может быть null, если прислан текст
+     * @param mediaSize
+     * @param text      текст отчета, может быть null, если прислано фото
      * @return Report сохраненные данные отчета для кошки или собаки
      */
-    public Report saveReport(Adoption adoption, LocalDate date, byte[] data, String mediaType, Long fileSize, String text) {
+    public Report saveReport(Adoption adoption, LocalDate date, byte[] photo, String mediaType, Long mediaSize, String text) {
         //вызывается из бота (дата в этом случае всегда now()), волонтер отчеты только читает
         if (adoption.getUser().getShelterId() == ShelterId.DOG) {
             DogAdoption dogAdoption = (DogAdoption) adoption;
             List<DogReport> reportList = dogReportRepository.findByAdoptionAndDate(dogAdoption, date);
             DogReport report;  //объект для сохранения
             if (reportList.isEmpty()) {
-                report = new DogReport(dogAdoption, LocalDate.now(), data, mediaType, fileSize, text);
+                report = new DogReport(dogAdoption, LocalDate.now(), photo, mediaType, mediaSize, text);
             } else {
                 report = reportList.get(0);
                 if (date != null) {
                     report.setDate(date);
                     report.setMediaType(mediaType);
-                    report.setFileSize(fileSize);
+                    report.setMediaSize(mediaSize);
                 }
                 if (text != null) {
                     report.setText(text);
@@ -91,13 +92,13 @@ public class ReportService {
             List<CatReport> reportList = catReportRepository.findByAdoptionAndDate(catAdoption, date);
             CatReport report;  //объект для сохранения
             if (reportList.isEmpty()) {
-                report = new CatReport(catAdoption, LocalDate.now(), data, mediaType, fileSize, text);
+                report = new CatReport(catAdoption, LocalDate.now(), photo, mediaType, mediaSize, text);
             } else {
                 report = reportList.get(0);
                 if (date != null) {
                     report.setDate(date);
                     report.setMediaType(mediaType);
-                    report.setFileSize(fileSize);
+                    report.setMediaSize(mediaSize);
                 }
                 if (text != null) {
                     report.setText(text);

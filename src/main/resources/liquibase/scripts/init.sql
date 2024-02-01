@@ -1,5 +1,6 @@
 -- liquibase formatted sql
 --changeLogSync aleksandr:create_shelter
+-- liquibase formatted sql
 CREATE TABLE shelter
 (
     id                   VARCHAR(3) PRIMARY KEY,
@@ -87,26 +88,7 @@ VALUES ('BadChoice', 'Нераспознанная команда. Выбери�
        ('MessageToVolunteer', 'Введите сообщение для волонтера', TRUE, 'MESSAGE_TO_VOLUNTEER'),
        ('FeedbackRequest', 'Введите контакт для обратной связи', TRUE, 'FEEDBACK_REQUEST');
 
---changeLogSync kim:create_user
-DROP TABLE IF EXISTS users;
-CREATE TABLE users
-( --имя user не разрешает, зарезервировано
-    id                BIGINT PRIMARY KEY,
-    name              VARCHAR(30) NOT NULL,
-    shelter_id        VARCHAR(3),
-    state_id          VARCHAR(30) NOT NULL,
-    previous_state_id VARCHAR(30),
-    state_time        TIMESTAMP,
-    FOREIGN KEY (state_id) REFERENCES state (id),
-    FOREIGN KEY (previous_state_id) REFERENCES state (id),
-    FOREIGN KEY (shelter_id) REFERENCES shelter (id)
-);
-INSERT INTO users(id, name, shelter_id, state_id)
-VALUES (11, 'User11', 'DOG', 'Shelter'),
-       (22, 'User22', 'CAT', 'Shelter'),
-       (340330886, 'Салават', Null, 'Shelter');
-
---changeLogSync kim:create_state_button
+-- changeLogSync kim:create_state_button
 DROP TABLE IF EXISTS state_button;
 CREATE TABLE state_button
 (
@@ -151,9 +133,28 @@ VALUES ('Stage', 'Узнать информацию о приюте (этап 1)
        ('GetAnimal', 'Причины отказа отдать животное', 'RefusalReasons', 9, 1, Null),
        ('GetAnimal', 'Назад к выбору этапа', 'Stage', 10, 1, Null),
        ('GetAnimal', 'Позвать волонтера', 'MessageToVolunteer', 11, 1, Null),
-       ('GetAnimal', 'Запросить обратную связь', 'FeedbackRequest', 11, 2, Null);
+       ('GetAnimal', 'Запросить обратную свзь', 'FeedbackRequest', 11, 2, Null);
 
---changeLogSync kim:create_message_to_volunteer
+--changeLogSync kim:create_user
+DROP TABLE IF EXISTS users;
+CREATE TABLE users
+( --имя user не разрешает, зарезервировано
+    id                BIGINT PRIMARY KEY,
+    name              VARCHAR(30) NOT NULL,
+    shelter_id        VARCHAR(3),
+    state_id          VARCHAR(30) NOT NULL,
+    previous_state_id VARCHAR(30),
+    state_time        TIMESTAMP,
+    FOREIGN KEY (state_id) REFERENCES state (id),
+    FOREIGN KEY (previous_state_id) REFERENCES state (id),
+    FOREIGN KEY (shelter_id) REFERENCES shelter (id)
+);
+INSERT INTO users(id, name, shelter_id, state_id)
+VALUES (11, 'User11', 'DOG', 'Shelter'),
+       (22, 'User22', 'CAT', 'Shelter'),
+       (340330886, 'Салават', Null, 'Shelter');
+
+--changeLogSync aleksandr:create_message_to_volunteer
 DROP TABLE IF EXISTS message_to_volunteer;
 CREATE TABLE message_to_volunteer
 (

@@ -11,6 +11,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMar
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import org.telegram.telegrambots.meta.generics.TelegramBot;
 import pro.sky.telegrambot.model.entity.User;
 import pro.sky.telegrambot.model.state.State;
 import pro.sky.telegrambot.model.state.StateButton;
@@ -59,10 +60,6 @@ public class TelegramBotSender extends TelegramLongPollingBot {
     public String getFileStorageUri() {
         return fileStorageUri;
     }
-
-//    @Override
-//    public void onUpdateReceived(Update update) {
-//    }
 
     //бот будет проверять этот текст в состояниях тестового ввода. Поэтому public
     public final String RETURN_BUTTON_FOR_TEXT_INPUT = "Назад к кнопкам";
