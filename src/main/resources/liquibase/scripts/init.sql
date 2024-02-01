@@ -154,7 +154,7 @@ VALUES (11, 'User11', 'DOG', 'Shelter'),
        (22, 'User22', 'CAT', 'Shelter'),
        (340330886, 'Салават', Null, 'Shelter');
 
---changeLogSync kim:create_message_to_volunteer
+--changeLogSync aleksandr:create_message_to_volunteer
 DROP TABLE IF EXISTS message_to_volunteer;
 CREATE TABLE message_to_volunteer
 (

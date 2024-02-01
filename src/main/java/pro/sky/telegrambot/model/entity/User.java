@@ -37,7 +37,7 @@ public class User {
         this.id = id;
     }
 
-    @JsonIgnore
+    //@JsonIgnore
     public State getState() {
         return state;
     }

@@ -109,8 +109,11 @@ public class TelegramBot extends TelegramBotSender {
                     initialState, shelter.getName(), afterShelterChoiceState,
                     (byte) 1, (byte) column.getAndIncrement(), null));
         });
-        initialState.setButtons(buttons);
+        if (this.initialState != null) {
+            initialState.setButtons(buttons);
+        }
     }
+
 
     @Override
     //TelegramBotSender, чтобы стать реальным классом, уже переопределил этот метод пустышкой
