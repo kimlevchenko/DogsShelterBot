@@ -67,13 +67,13 @@ public class ReportController {
             @Parameter(description = "Идентификатор отчета о животном")
             @PathVariable("report_id") Integer reportId) {
         Report report = reportService.getReportById(shelterId, reportId);
-        byte[] data = report.getData();
+        byte[] photo = report.getPhoto();
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_JPEG);
-        headers.setContentLength(data.length);
+        headers.setContentLength(photo.length);
 
-        return new ResponseEntity<>(data, headers, HttpStatus.OK);
+        return new ResponseEntity<>(photo, headers, HttpStatus.OK);
     }
 
 

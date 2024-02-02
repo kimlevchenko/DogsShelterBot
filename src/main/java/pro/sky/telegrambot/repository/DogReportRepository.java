@@ -8,7 +8,6 @@ import pro.sky.telegrambot.model.report.DogReport;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface DogReportRepository extends JpaRepository<DogReport, Integer> {
@@ -18,7 +17,7 @@ public interface DogReportRepository extends JpaRepository<DogReport, Integer> {
     //для бота для оценки состояния сдачи отчета
     List<DogReport> findByAdoptionAndDate(DogAdoption dogAdoption, LocalDate date);
 
-    List<DogReport> findByDateAndDataIsNotNullAndTextIsNotNull(LocalDate date);
+    List<DogReport> findByDateAndPhotoIsNotNullAndTextIsNotNull(LocalDate date);
 
     @Query(value = "SELECT * FROM dog_report where adoption_id = ?1 " +
             "and data is not null " +

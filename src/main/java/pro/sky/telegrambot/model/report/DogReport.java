@@ -13,8 +13,8 @@ public class DogReport extends Report {
     @ManyToOne
     private DogAdoption adoption;
 
-    public DogReport(DogAdoption adoption, LocalDate now, byte[] data, String mediaType, Long fileSize, String text) {
-        super(fileSize, mediaType, data, text);
+    public DogReport(DogAdoption adoption, LocalDate now, byte[] photo, String mediaType, Long mediaSize, String text) {
+        super(mediaSize, mediaType, photo, text);
         this.adoption = adoption;
     }
 

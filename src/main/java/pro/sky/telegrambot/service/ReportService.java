@@ -4,10 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
-import pro.sky.telegrambot.exception.TelegramApiException;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import pro.sky.telegrambot.exception.ShelterNotFoundException;
 import pro.sky.telegrambot.exception.TelegramException;
-import pro.sky.telegrambot.listener.TelegramBotUpdatesListener;
+import pro.sky.telegrambot.configuration.TelegramBotSender;
 import pro.sky.telegrambot.model.adoption.Adoption;
 import pro.sky.telegrambot.model.adoption.CatAdoption;
 import pro.sky.telegrambot.model.adoption.DogAdoption;
@@ -32,19 +32,19 @@ public class ReportService {
     private final CatReportRepository catReportRepository;
     private final ShelterService shelterService;
     private final UserRepository userRepository;
-    private final TelegramBotUpdatesListener telegramBotUpdatesListener;
+    private final TelegramBotSender telegramBotSender;
 
 
     public ReportService(CatReportRepository catReportRepository,
                          DogReportRepository dogReportRepository,
                          ShelterService shelterService,
                          UserRepository userRepository,
-                         TelegramBotUpdatesListener telegramBotUpdatesListener) {
+                         TelegramBotSender telegramBotSender) {
         this.dogReportRepository = dogReportRepository;
         this.catReportRepository = catReportRepository;
         this.shelterService = shelterService;
         this.userRepository = userRepository;
-        this.telegramBotUpdatesListener = telegramBotUpdatesListener;
+        this.telegramBotSender = telegramBotSender;
     }
 
     //из такого репозитория удается прочитать, возвращается предок
@@ -60,26 +60,27 @@ public class ReportService {
      * Если для заданного усыновления и даты отчет найден, то он дополняется,
      * если нет, то создается новый
      *
-     * @param adoption активное усыновление пользователя
-     * @param date     дата отчета
-     * @param data     фото отчета, может быть null, если прислан текст
-     * @param text     текст отчета, может быть null, если прислано фото
+     * @param adoption  активное усыновление пользователя
+     * @param date      дата отчета
+     * @param photo     фото отчета, может быть null, если прислан текст
+     * @param mediaSize
+     * @param text      текст отчета, может быть null, если прислано фото
      * @return Report сохраненные данные отчета для кошки или собаки
      */
-    public Report saveReport(Adoption adoption, LocalDate date, byte[] data, String mediaType, Long fileSize, String text) {
+    public Report saveReport(Adoption adoption, LocalDate date, byte[] photo, String mediaType, Long mediaSize, String text) {
         //вызывается из бота (дата в этом случае всегда now()), волонтер отчеты только читает
         if (adoption.getUser().getShelterId() == ShelterId.DOG) {
             DogAdoption dogAdoption = (DogAdoption) adoption;
             List<DogReport> reportList = dogReportRepository.findByAdoptionAndDate(dogAdoption, date);
             DogReport report;  //объект для сохранения
             if (reportList.isEmpty()) {
-                report = new DogReport(dogAdoption, LocalDate.now(), data, mediaType, fileSize, text);
+                report = new DogReport(dogAdoption, LocalDate.now(), photo, mediaType, mediaSize, text);
             } else {
                 report = reportList.get(0);
                 if (date != null) {
                     report.setDate(date);
                     report.setMediaType(mediaType);
-                    report.setFileSize(fileSize);
+                    report.setMediaSize(mediaSize);
                 }
                 if (text != null) {
                     report.setText(text);
@@ -91,13 +92,13 @@ public class ReportService {
             List<CatReport> reportList = catReportRepository.findByAdoptionAndDate(catAdoption, date);
             CatReport report;  //объект для сохранения
             if (reportList.isEmpty()) {
-                report = new CatReport(catAdoption, LocalDate.now(), data, mediaType, fileSize, text);
+                report = new CatReport(catAdoption, LocalDate.now(), photo, mediaType, mediaSize, text);
             } else {
                 report = reportList.get(0);
                 if (date != null) {
                     report.setDate(date);
                     report.setMediaType(mediaType);
-                    report.setFileSize(fileSize);
+                    report.setMediaSize(mediaSize);
                 }
                 if (text != null) {
                     report.setText(text);
@@ -207,7 +208,7 @@ public class ReportService {
         User user = userRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("User with id " + id + " not found"));
         try {
-            telegramBotUpdatesListener.sendMessageToUser(
+            telegramBotSender.sendMessageToUser(
                     user, "Дорогой усыновитель, мы заметили, что ты заполняешь отчет не так подробно, как необходимо. " +
                             "Пожалуйста, подойди ответственнее к этому занятию. В противном случае волонтеры приюта будут обязаны " +
                             "самолично проверять условия содержания животного", 0);

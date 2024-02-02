@@ -15,6 +15,8 @@ import pro.sky.telegrambot.model.animal.Dog;
 import pro.sky.telegrambot.model.entity.ShelterId;
 import pro.sky.telegrambot.repository.CatRepository;
 import pro.sky.telegrambot.repository.DogRepository;
+import pro.sky.telegrambot.service.AnimalService;
+import pro.sky.telegrambot.service.ShelterService;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
