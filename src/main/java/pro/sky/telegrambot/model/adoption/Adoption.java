@@ -90,11 +90,4 @@ public abstract class Adoption {
                 '}';
     }
 
-    public int getAnimalId() {
-        return getAnimalId();
-    }
-
-    public long getUserId() {
-        return getUserId();
-    }
 }
