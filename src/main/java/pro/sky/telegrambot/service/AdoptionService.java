@@ -145,7 +145,6 @@ public class AdoptionService {
      *
      * @param shelterId  идентификатор приюта.
      * @param adoptionId индификатор усыновления.
-     * @param Exception
      * @return {@link Adoption} измененный объект
      * //* @throws ShelterNotFoundException если приют не найден.
      * @throws EntityNotFoundException если не найден id усыновления
