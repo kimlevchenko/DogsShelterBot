@@ -145,13 +145,12 @@ public class AdoptionService {
      *
      * @param shelterId  идентификатор приюта.
      * @param adoptionId индификатор усыновления.
-     * @param Exception
      * @return {@link Adoption} измененный объект
      * //* @throws ShelterNotFoundException если приют не найден.
      * @throws EntityNotFoundException если не найден id усыновления
      * @throws TelegramException       если не найден не состоялось уведомление пользователя
      */
-    public Adoption setTrialDate(ShelterId shelterId, Integer adoptionId, LocalDate trialDate, Exception Exception) throws TelegramException {
+    public Adoption setTrialDate(ShelterId shelterId, Integer adoptionId, LocalDate trialDate) throws TelegramException {
         shelterService.checkShelterIdGender(shelterId);
 
         Adoption adoption = adoptionRepository(shelterId).findById(adoptionId).orElseThrow(() -> new EntityNotFoundException(
@@ -249,10 +248,7 @@ public class AdoptionService {
             return adoptionList.get(0);
         }
     }
-
-    public Adoption setTrialDate(ShelterId shelterId, Integer adoptionId, LocalDate trialDate) {
-        return setTrialDate(shelterId, adoptionId, trialDate);
     }
-}
+
 
 
